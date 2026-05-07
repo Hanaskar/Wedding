@@ -34,7 +34,7 @@
 
         @keyframes subtleZoom {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
 
@@ -61,8 +61,8 @@
             position: absolute;
             inset: 0;
             transition: background-color 1s ease;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
         }
         .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.9); }
         .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.88); }
@@ -149,21 +149,24 @@
             100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        /* ANTI WHITE BOX FIX - Memaksa input tetap transparan gelap */
+        /* ANTI WHITE BOX FIX */
         .form-input-custom {
-            background-color: rgba(0, 0, 0, 0.4) !important;
+            background-color: rgba(20, 20, 20, 0.6) !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             padding: 14px 18px !important;
             border-radius: 4px;
             transition: all 0.3s;
-            backdrop-filter: blur(5px);
             width: 100%;
         }
         .theme-light .form-input-custom {
-            background-color: rgba(255, 255, 255, 0.5) !important;
+            background-color: rgba(255, 255, 255, 0.8) !important;
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
             color: #1a1a1a !important;
+        }
+        .form-input-custom:focus {
+            border-color: #ffffff !important;
+            outline: none;
         }
         .form-input-custom option {
             background-color: #1a1a1a;
@@ -233,7 +236,6 @@
 
                 <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30"></div>
 
-                <!-- Teks QS Dirapikan -->
                 <div class="max-w-2xl mx-auto px-4">
                     <p class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90" data-aos="fade-up">
                         "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
@@ -303,7 +305,6 @@
                 <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase" data-aos="fade-up">Waktu & Tempat</h2>
                 <div class="ornament mb-16 max-w-xs mx-auto"></div>
                 <div class="grid md:grid-cols-2 gap-10 md:gap-12 max-w-4xl mx-auto">
-                    <!-- Akad Card -->
                     <div class="glass-card p-12 relative flex flex-col items-center text-center" data-aos="fade-up">
                         <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mt-4 mb-2">Akad Nikah</h3>
                         <p class="text-[10px] tracking-[0.3em] opacity-60 mb-10 uppercase">The Union</p>
@@ -317,7 +318,6 @@
                             <p class="font-bold uppercase tracking-widest leading-relaxed">Masjid Raya Baiturrahman <br> <span class="font-light text-xs opacity-70">Jakarta</span></p>
                         </div>
                     </div>
-                    <!-- Resepsi Card -->
                     <div class="glass-card p-12 relative flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="200">
                         <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mt-4 mb-2">Resepsi</h3>
                         <p class="text-[10px] tracking-[0.3em] opacity-60 mb-10 uppercase">Celebration</p>
@@ -368,7 +368,7 @@
             </div>
         </section>
 
-        <!-- RSVP Section (FIXED LIVE) -->
+        <!-- RSVP Section -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto">
             <h2 class="font-cinzel text-3xl text-center mb-6 tracking-widest uppercase" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="ornament mb-16 max-w-xs mx-auto"></div>
@@ -393,7 +393,8 @@
                     <button type="submit" id="submit-wish-btn" class="w-full py-5 bg-[#1a1a1a] text-white font-bold tracking-[0.5em] uppercase text-[10px] hover:bg-black transition shadow-lg rounded-sm border border-white/10">Kirim Pesan</button>
                 </form>
 
-                <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar text-left">
+                <!-- Ruangan Komen Live -->
+                <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 text-left">
                     <p class="text-xs opacity-50 italic text-center py-10">Memuat ucapan...</p>
                 </div>
             </div>
@@ -410,7 +411,6 @@
 
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-current text-white theme-dark:text-black theme-light:text-white text-[9px] font-bold tracking-[0.4em] uppercase opacity-0 transition-opacity z-[100] pointer-events-none shadow-2xl rounded-sm">Disalin ke Clipboard</div>
 
-    <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true, easing: 'ease-out-cubic', offset: 50 });
@@ -436,24 +436,13 @@
         function toggleMusic(forcePlay = false) {
             clearInterval(fadeInterval);
             if (forcePlay || !isPlaying) {
-                if (audio.paused) {
-                    audio.volume = 0;
-                    audio.play().catch(e => console.log("Music interaction required"));
-                }
-                fadeInterval = setInterval(() => {
-                    if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05);
-                    else clearInterval(fadeInterval);
-                }, 150);
-                musicIcon.classList.remove('fa-pause');
-                musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
+                if (audio.paused) { audio.volume = 0; audio.play().catch(e => console.log(e)); }
+                fadeInterval = setInterval(() => { if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05); else clearInterval(fadeInterval); }, 150);
+                musicIcon.classList.remove('fa-pause'); musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
                 isPlaying = true;
             } else {
-                fadeInterval = setInterval(() => {
-                    if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05);
-                    else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); }
-                }, 150);
-                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc');
-                musicIcon.classList.add('fa-pause');
+                fadeInterval = setInterval(() => { if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05); else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); } }, 150);
+                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc'); musicIcon.classList.add('fa-pause');
                 isPlaying = false;
             }
         }
@@ -465,7 +454,6 @@
             setTimeout(() => toast.classList.add('opacity-0'), 2500);
         }
 
-        // Bunga Gugur Script
         function initPetals() {
             const container = document.getElementById('petal-container');
             for (let i = 0; i < 20; i++) {
@@ -502,51 +490,34 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = "wedding-akbari-wahidah";
 
         let userAuth = null;
 
-        // Login anonim segera setelah load
-        const initAuth = async () => {
-            try {
-                const userCredential = await signInAnonymously(auth);
-                userAuth = userCredential.user;
-                return userAuth;
-            } catch(e) { 
-                console.error("Login Gagal:", e);
-                return null;
-            }
-        };
-
+        // Login anonim
         onAuthStateChanged(auth, (user) => {
             userAuth = user;
-            if (user) {
-                loadComments();
-            }
+            if (user) { loadComments(); } 
+            else { signInAnonymously(auth).catch(e => console.error("Login Gagal:", e)); }
         });
 
-        initAuth();
-
         function loadComments() {
-            if (!userAuth) return;
-            const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
-            
+            // Menggunakan koleksi root 'ucapan' agar simpel dan tidak error permission
+            const commentsRef = collection(db, 'ucapan');
             onSnapshot(commentsRef, (snapshot) => {
                 const list = [];
                 snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
                 list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
                 renderComments(list);
             }, (error) => {
-                console.error("Gagal sinkronisasi data:", error);
+                console.error("Firebase Error:", error);
+                alert("Error Firebase: " + error.message);
             });
         }
 
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
-            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4 text-white">Belum ada ucapan.</p>';
-            
+            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4">Belum ada ucapan.</p>';
             comments.forEach(c => {
-                const badgeClass = c.attendance === 'Hadir' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
                 const div = document.createElement('div');
                 div.className = 'flex gap-4 p-4 border-b border-white/5 last:border-0';
                 div.innerHTML = `
@@ -554,7 +525,7 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
                             <h5 class="font-bold text-[10px] uppercase tracking-[0.4em] text-white">${c.name}</h5>
-                            <span class="${badgeClass} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
+                            <span class="${c.attendance === 'Hadir' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
                         </div>
                         <p class="text-xs opacity-80 leading-relaxed font-light text-white">"${c.message}"</p>
                     </div>`;
@@ -564,23 +535,12 @@
 
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
             const btn = document.getElementById('submit-wish-btn');
             const originalText = btn.innerHTML;
             btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
 
-            if(!userAuth) {
-                const loggedIn = await initAuth();
-                if(!loggedIn) {
-                    alert("Koneksi gagal. Sila coba lagi sebentar.");
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    return;
-                }
-            }
-
             try {
-                const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
+                const commentsRef = collection(db, 'ucapan');
                 await addDoc(commentsRef, {
                     name: document.getElementById('wish-name').value,
                     message: document.getElementById('wish-message').value,
@@ -590,7 +550,7 @@
                 document.getElementById('wish-form').reset();
             } catch(e) { 
                 console.error("Gagal Kirim:", e);
-                alert("Gagal mengirim ucapan."); 
+                alert("Gagal kirim ucapan: " + e.message); 
             } finally { 
                 btn.innerHTML = originalText; 
                 btn.disabled = false; 
