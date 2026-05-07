@@ -61,8 +61,8 @@
             position: absolute;
             inset: 0;
             transition: background-color 1s ease;
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
         }
         .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.9); }
         .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.88); }
@@ -101,6 +101,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+            transition: all 1s ease;
         }
         .theme-light .glass-card {
             background: rgba(255, 255, 255, 0.65);
@@ -149,28 +150,40 @@
             100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        /* ANTI WHITE BOX FIX */
+        /* ANTI WHITE BOX FIX - Mencegah kotak input jadi putih/silau */
         .form-input-custom {
-            background-color: rgba(20, 20, 20, 0.6) !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
             color: #ffffff !important;
             padding: 14px 18px !important;
             border-radius: 4px;
             transition: all 0.3s;
+            backdrop-filter: blur(5px);
             width: 100%;
         }
         .theme-light .form-input-custom {
-            background-color: rgba(255, 255, 255, 0.8) !important;
+            background-color: rgba(255, 255, 255, 0.7) !important;
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
             color: #1a1a1a !important;
         }
         .form-input-custom:focus {
+            background-color: rgba(0, 0, 0, 0.6) !important;
             border-color: #ffffff !important;
             outline: none;
+        }
+        .form-input-custom::placeholder {
+            color: rgba(255, 255, 255, 0.4) !important;
+        }
+        .theme-light .form-input-custom::placeholder {
+            color: rgba(0, 0, 0, 0.4) !important;
         }
         .form-input-custom option {
             background-color: #1a1a1a;
             color: #ffffff;
+        }
+        .theme-light .form-input-custom option {
+            background-color: #ffffff;
+            color: #1a1a1a;
         }
 
         .bank-card {
@@ -236,6 +249,7 @@
 
                 <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30"></div>
 
+                <!-- Teks QS Dirapikan (Lebar dibatasi agar tidak melar) -->
                 <div class="max-w-2xl mx-auto px-4">
                     <p class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90" data-aos="fade-up">
                         "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
@@ -291,10 +305,10 @@
                     <p class="text-[9px] uppercase tracking-[0.8em] opacity-60">Kisah Cinta Kami</p>
                 </div>
                 <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80" class="w-full h-auto"></div>
-                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80" class="w-full h-auto"></div>
-                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80" class="w-full h-auto"></div>
-                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80" class="w-full h-auto"></div>
+                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80" class="w-full h-auto rounded-sm"></div>
+                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80" class="w-full h-auto rounded-sm"></div>
+                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80" class="w-full h-auto rounded-sm"></div>
+                    <div class="break-inside-avoid overflow-hidden shadow-lg border border-current/10" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80" class="w-full h-auto rounded-sm"></div>
                 </div>
             </div>
         </section>
@@ -305,6 +319,7 @@
                 <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase" data-aos="fade-up">Waktu & Tempat</h2>
                 <div class="ornament mb-16 max-w-xs mx-auto"></div>
                 <div class="grid md:grid-cols-2 gap-10 md:gap-12 max-w-4xl mx-auto">
+                    <!-- Akad Card -->
                     <div class="glass-card p-12 relative flex flex-col items-center text-center" data-aos="fade-up">
                         <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mt-4 mb-2">Akad Nikah</h3>
                         <p class="text-[10px] tracking-[0.3em] opacity-60 mb-10 uppercase">The Union</p>
@@ -318,6 +333,7 @@
                             <p class="font-bold uppercase tracking-widest leading-relaxed">Masjid Raya Baiturrahman <br> <span class="font-light text-xs opacity-70">Jakarta</span></p>
                         </div>
                     </div>
+                    <!-- Resepsi Card -->
                     <div class="glass-card p-12 relative flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="200">
                         <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mt-4 mb-2">Resepsi</h3>
                         <p class="text-[10px] tracking-[0.3em] opacity-60 mb-10 uppercase">Celebration</p>
@@ -335,7 +351,7 @@
             </div>
         </section>
 
-        <!-- Digital Amplop -->
+        <!-- Digital Amplop (ATM Style) -->
         <section id="gift" class="py-24 px-6 text-center">
             <div class="max-w-3xl mx-auto glass-card p-8 md:p-16 border-b-4 border-b-current" data-aos="fade-up">
                 <h2 class="font-cinzel text-2xl mb-6 tracking-widest uppercase">Wedding Gift</h2>
@@ -347,7 +363,7 @@
                 <div class="relative w-full max-w-[360px] mx-auto aspect-[1.586/1] rounded-2xl overflow-hidden shadow-2xl p-6 flex flex-col justify-between bank-card text-white text-left transition-transform hover:scale-105 duration-500" data-aos="zoom-in">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')] pointer-events-none mix-blend-overlay"></div>
                     <div class="relative z-10 flex justify-between items-start">
-                        <div class="bg-white px-3 py-1.5 rounded-md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BRI_2020.svg/1024px-BRI_2020.svg.png" class="h-5"></div>
+                        <div class="bg-white px-3 py-1.5 rounded-md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BRI_2020.svg/1024px-BRI_2020.svg.png" class="h-5" alt="BRI"></div>
                         <svg class="w-10 h-10 opacity-70 text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <rect x="2" y="5" width="20" height="14" rx="2" ry="2" fill="rgba(234, 179, 8, 0.2)"></rect>
                             <line x1="2" y1="9" x2="22" y2="9"></line><line x1="2" y1="14" x2="22" y2="14"></line>
@@ -368,7 +384,7 @@
             </div>
         </section>
 
-        <!-- RSVP Section -->
+        <!-- RSVP Section (FIXED LIVE LOGIC) -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto">
             <h2 class="font-cinzel text-3xl text-center mb-6 tracking-widest uppercase" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="ornament mb-16 max-w-xs mx-auto"></div>
@@ -394,8 +410,8 @@
                 </form>
 
                 <!-- Ruangan Komen Live -->
-                <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 text-left">
-                    <p class="text-xs opacity-50 italic text-center py-10">Memuat ucapan...</p>
+                <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar text-left">
+                    <p id="loading-text" class="text-xs opacity-50 italic text-center py-10">Memuat ucapan...</p>
                 </div>
             </div>
         </section>
@@ -476,8 +492,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Konfigurasi asli dari screenshot Anda
         const firebaseConfig = {
             apiKey: "AIzaSyBLbFjb4p1OoVa6Ho4khwa6Q7EFnzaaRms",
             authDomain: "wedding-41754.firebaseapp.com",
@@ -490,34 +507,41 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const colRef = collection(db, 'ucapan_pernikahan');
 
         let userAuth = null;
 
-        // Login anonim
+        // Login anonim segera setelah load
         onAuthStateChanged(auth, (user) => {
-            userAuth = user;
-            if (user) { loadComments(); } 
-            else { signInAnonymously(auth).catch(e => console.error("Login Gagal:", e)); }
+            if (user) {
+                userAuth = user;
+                console.log("Terhubung sebagai:", user.uid);
+                startListening();
+            } else {
+                signInAnonymously(auth).catch(e => console.error("Login Gagal:", e));
+            }
         });
 
-        function loadComments() {
-            // Menggunakan koleksi root 'ucapan' agar simpel dan tidak error permission
-            const commentsRef = collection(db, 'ucapan');
-            onSnapshot(commentsRef, (snapshot) => {
+        // Pendengar data real-time
+        function startListening() {
+            onSnapshot(colRef, (snapshot) => {
                 const list = [];
                 snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+                // Urutkan manual berdasarkan waktu terbaru
                 list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
                 renderComments(list);
             }, (error) => {
-                console.error("Firebase Error:", error);
-                alert("Error Firebase: " + error.message);
+                console.error("Firebase Sync Error:", error);
+                document.getElementById('loading-text').innerText = "Gagal memuat ucapan: " + error.message;
             });
         }
 
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
-            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4">Belum ada ucapan.</p>';
+            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4 text-white">Belum ada ucapan. Jadilah yang pertama!</p>';
+            
             comments.forEach(c => {
+                const badgeClass = c.attendance === 'Hadir' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
                 const div = document.createElement('div');
                 div.className = 'flex gap-4 p-4 border-b border-white/5 last:border-0';
                 div.innerHTML = `
@@ -525,7 +549,7 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
                             <h5 class="font-bold text-[10px] uppercase tracking-[0.4em] text-white">${c.name}</h5>
-                            <span class="${c.attendance === 'Hadir' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
+                            <span class="${badgeClass} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
                         </div>
                         <p class="text-xs opacity-80 leading-relaxed font-light text-white">"${c.message}"</p>
                     </div>`;
@@ -533,21 +557,32 @@
             });
         }
 
+        // Fungsi Kirim Pesan
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submit-wish-btn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
+            
+            if(!userAuth) {
+                alert("Sedang menyambungkan ke server, mohon tunggu sebentar...");
+                return;
+            }
+
+            btn.innerHTML = 'MENGIRIM...'; 
+            btn.disabled = true;
+
+            const data = {
+                name: document.getElementById('wish-name').value,
+                message: document.getElementById('wish-message').value,
+                attendance: document.getElementById('wish-attendance').value,
+                timestamp: serverTimestamp()
+            };
 
             try {
-                const commentsRef = collection(db, 'ucapan');
-                await addDoc(commentsRef, {
-                    name: document.getElementById('wish-name').value,
-                    message: document.getElementById('wish-message').value,
-                    attendance: document.getElementById('wish-attendance').value,
-                    timestamp: serverTimestamp()
-                });
+                await addDoc(colRef, data);
                 document.getElementById('wish-form').reset();
+                // Alert sukses opsional agar user tidak bingung
+                // alert("Ucapan terkirim!"); 
             } catch(e) { 
                 console.error("Gagal Kirim:", e);
                 alert("Gagal kirim ucapan: " + e.message); 
