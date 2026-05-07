@@ -28,7 +28,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body.locked { overflow: hidden; }
-        
         .theme-dark { color: #ffffff; }
         .theme-light { color: #1a1a1a; }
 
@@ -37,116 +36,45 @@
             50% { transform: scale(1.08); }
             100% { transform: scale(1); }
         }
+        .bg-zoom-animate { animation: subtleZoom 30s ease-in-out infinite; }
 
-        .bg-zoom-animate {
-            animation: subtleZoom 30s ease-in-out infinite;
-        }
-
-        #global-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -10;
-            overflow: hidden;
-        }
-
+        #global-bg { position: fixed; inset: 0; z-index: -10; overflow: hidden; }
         #global-bg-img {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&st=f5fb3b67&raw=1');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
         }
 
         .bg-overlay {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             transition: background-color 1s ease;
             backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
         }
         .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.9); }
         .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.88); }
 
-        .noise-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: -5;
-            opacity: 0.05;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
         .watermark-bg {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 0.03;
+            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+            z-index: -2; pointer-events: none; opacity: 0.03;
         }
-        .watermark-text {
-            font-family: 'Great Vibes', cursive;
-            font-size: 15vw;
-            white-space: nowrap;
-            color: currentColor;
-            user-select: none;
-        }
+        .watermark-text { font-family: 'Great Vibes', cursive; font-size: 15vw; color: currentColor; }
 
         .glass-card {
             background: rgba(25, 25, 25, 0.55);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
-            transition: all 1s ease;
         }
-        .theme-light .glass-card {
-            background: rgba(255, 255, 255, 0.65);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
+        .theme-light .glass-card { background: rgba(255, 255, 255, 0.65); border: 1px solid rgba(0, 0, 0, 0.05); }
 
-        .img-frame {
-            position: relative;
-            padding: 12px;
-            background: transparent;
-            z-index: 10;
-        }
-        .img-frame::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 35px; height: 35px;
-            border-top: 2px solid currentColor; border-left: 2px solid currentColor; opacity: 0.7;
-        }
-        .img-frame::after {
-            content: ''; position: absolute; bottom: 0; right: 0; width: 35px; height: 35px;
-            border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; opacity: 0.7;
-        }
-        .img-inner-border {
-            position: absolute; inset: 6px; border: 1px solid currentColor; opacity: 0.2; pointer-events: none;
-        }
+        .img-frame { position: relative; padding: 12px; background: transparent; z-index: 10; }
+        .img-frame::before { content: ''; position: absolute; top: 0; left: 0; width: 35px; height: 35px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; opacity: 0.7; }
+        .img-frame::after { content: ''; position: absolute; bottom: 0; right: 0; width: 35px; height: 35px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; opacity: 0.7; }
+        .img-inner-border { position: absolute; inset: 6px; border: 1px solid currentColor; opacity: 0.2; pointer-events: none; }
 
-        .ornament {
-            width: 100%; height: 30px;
-            background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
-            background-size: 12px 12px; opacity: 0.15; margin: 2rem 0;
-            mask-image: linear-gradient(to right, transparent, black, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black, transparent);
-        }
-
-        .animate-spin-slow { animation: spin 8s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .petal {
-            position: absolute;
-            top: -10%;
-            pointer-events: none;
-            animation: fall linear infinite;
-        }
+        .petal { position: absolute; top: -10%; pointer-events: none; animation: fall linear infinite; z-index: 0; }
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: var(--max-opacity, 0.5); }
-            90% { opacity: var(--max-opacity, 0.5); }
             100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
@@ -158,7 +86,6 @@
             padding: 14px 18px !important;
             border-radius: 4px;
             transition: all 0.3s;
-            backdrop-filter: blur(5px);
             width: 100%;
         }
         .theme-light .form-input-custom {
@@ -166,18 +93,8 @@
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
             color: #1a1a1a !important;
         }
-        .form-input-custom:focus {
-            background-color: rgba(0, 0, 0, 0.8) !important;
-            border-color: #ffffff !important;
-            outline: none;
-        }
-        .form-input-custom::placeholder {
-            color: rgba(255, 255, 255, 0.4) !important;
-        }
-        .form-input-custom option {
-            background-color: #1a1a1a;
-            color: #ffffff;
-        }
+        .form-input-custom:focus { border-color: #ffffff !important; outline: none; }
+        .form-input-custom option { background-color: #1a1a1a; color: #ffffff; }
 
         .bank-card {
             background: linear-gradient(135deg, rgba(67, 67, 67, 0.9) 0%, rgba(28, 28, 28, 0.95) 100%);
@@ -208,11 +125,11 @@
     <audio id="wedding-music" loop src="https://www.dropbox.com/scl/fi/60flvsvw1mykghel4lcet/Kasih-Aera.mp3?rlkey=wehims3r2337ab73mfsscvkkx&st=6i9rp5tr&raw=1"></audio>
 
     <!-- Section: Cover -->
-    <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out overflow-hidden">
+    <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out overflow-hidden text-center flex items-center justify-center">
         <div class="absolute inset-0 bg-cover bg-center opacity-60 bg-zoom-animate" style="background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&st=f5fb3b67&raw=1');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent"></div>
         
-        <div class="relative z-10 h-full flex flex-col items-center justify-center text-white text-center px-6">
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-6">
             <h3 class="text-[10px] tracking-[0.8em] mb-6 uppercase font-light" data-aos="fade-up">Undangan Pernikahan</h3>
             <h1 class="font-cinzel text-5xl md:text-7xl mb-4 tracking-widest drop-shadow-2xl" data-aos="zoom-in" data-aos-duration="2000">Akbari <span class="block text-3xl font-great-vibes my-3 text-white/50">&</span> Wahidah</h1>
             <p class="text-xs tracking-[0.4em] mb-16 font-light opacity-70" data-aos="fade-up" data-aos-delay="800">SABTU, 26 OKTOBER 2024</p>
@@ -234,7 +151,6 @@
         <section class="py-32 px-6 text-center">
             <div class="max-w-4xl mx-auto glass-card p-12 md:p-16 border-t-4 border-t-current" data-aos="fade-up">
                 <div class="opacity-30 text-4xl mb-6"><i class="fa-solid fa-quote-left"></i></div>
-                
                 <h3 class="font-cinzel text-xl md:text-2xl font-bold tracking-widest mb-4 uppercase">Assalamu’alaikum Warahmatullahi Wabarakatuh</h3>
                 <p class="mb-12 leading-loose tracking-wide text-sm md:text-base font-light opacity-90 max-w-2xl mx-auto">
                     Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami.
@@ -242,6 +158,7 @@
 
                 <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30"></div>
 
+                <!-- Teks QS Ar-Rum -->
                 <div class="max-w-2xl mx-auto px-4 text-center">
                     <p class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90" data-aos="fade-up">
                         "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
@@ -255,7 +172,7 @@
         <!-- Mempelai Details -->
         <section id="couple" class="py-24 px-6 text-center">
             <h2 class="font-cinzel text-3xl mb-6 tracking-[0.5em] uppercase" data-aos="fade-up">Mempelai</h2>
-            <div class="ornament mb-20 max-w-xs mx-auto"></div>
+            <div class="w-1/4 h-[1px] bg-current mx-auto mb-20 opacity-20"></div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-12 md:gap-4 max-w-6xl mx-auto w-full">
                 <!-- Groom -->
@@ -264,7 +181,7 @@
                         <div class="img-inner-border"></div>
                         <img src="https://www.dropbox.com/scl/fi/03gjazja0mmgc65c25xij/IMG_3435.jpg?rlkey=yu4qodtki9ch8g915i7b6f59z&st=2ad8z8it&raw=1" alt="Mempelai Pria" class="w-full aspect-[4/5] object-cover rounded-sm grayscale hover:grayscale-0 transition-all duration-700">
                     </div>
-                    <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3">Muhammad Maulida Akbari</h3>
+                    <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3 text-center">Muhammad Maulida Akbari</h3>
                     <div class="h-[1px] w-12 bg-current mx-auto mb-5 opacity-40"></div>
                     <p class="text-[9px] uppercase tracking-[0.3em] opacity-60 mb-2">Putra Pertama Dari:</p>
                     <p class="text-xs font-medium tracking-wide opacity-80">Bapak Nurrahman <br> & <br> Ibu Misna</p>
@@ -309,7 +226,7 @@
         <section id="event" class="py-24 px-6">
             <div class="max-w-5xl mx-auto text-center">
                 <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase" data-aos="fade-up">Waktu & Tempat</h2>
-                <div class="ornament mb-16 max-w-xs mx-auto"></div>
+                <div class="w-1/6 h-[1px] bg-current mx-auto mb-16 opacity-20"></div>
                 <div class="grid md:grid-cols-2 gap-10 md:gap-12 max-w-4xl mx-auto">
                     <!-- Akad Card -->
                     <div class="glass-card p-12 relative flex flex-col items-center text-center" data-aos="fade-up">
@@ -343,7 +260,7 @@
             </div>
         </section>
 
-        <!-- Digital Amplop (ATM Style) -->
+        <!-- Digital Amplop -->
         <section id="gift" class="py-24 px-6 text-center">
             <div class="max-w-3xl mx-auto glass-card p-8 md:p-16 border-b-4 border-b-current" data-aos="fade-up">
                 <h2 class="font-cinzel text-2xl mb-6 tracking-widest uppercase">Wedding Gift</h2>
@@ -352,6 +269,7 @@
                     Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br>
                     Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui di bawah ini.
                 </p>
+                <!-- Kartu ATM BRI -->
                 <div class="relative w-full max-w-[360px] mx-auto aspect-[1.586/1] rounded-2xl overflow-hidden shadow-2xl p-6 flex flex-col justify-between bank-card text-white text-left transition-transform hover:scale-105 duration-500" data-aos="zoom-in">
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')] pointer-events-none mix-blend-overlay"></div>
                     <div class="relative z-10 flex justify-between items-start">
@@ -363,7 +281,7 @@
                     </div>
                     <div class="relative z-10 mt-auto">
                         <p class="text-[9px] opacity-70 uppercase tracking-widest mb-1">No Rekening</p>
-                        <p id="rek-number" class="text-xl md:text-2xl font-mono tracking-[0.15em] mb-4">0330 0105 8799 505</p>
+                        <p class="text-xl md:text-2xl font-mono tracking-[0.15em] mb-4">0330 0105 8799 505</p>
                         <div class="flex justify-between items-end">
                             <div>
                                 <p class="text-[9px] opacity-70 uppercase tracking-widest mb-1">Atas Nama</p>
@@ -376,10 +294,10 @@
             </div>
         </section>
 
-        <!-- RSVP Section (FIXED LIVE LOGIC) -->
-        <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto">
+        <!-- RSVP Section (FINAL FIXED) -->
+        <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto text-center">
             <h2 class="font-cinzel text-3xl text-center mb-6 tracking-widest uppercase" data-aos="fade-up">Ucapan & Doa</h2>
-            <div class="ornament mb-16 max-w-xs mx-auto"></div>
+            <div class="w-1/4 h-[1px] bg-current mx-auto mb-16 opacity-20"></div>
             
             <div class="glass-card p-10 md:p-16 relative" data-aos="fade-up">
                 <form id="wish-form" class="space-y-6">
@@ -444,31 +362,17 @@
         function toggleMusic(forcePlay = false) {
             clearInterval(fadeInterval);
             if (forcePlay || !isPlaying) {
-                if (audio.paused) {
-                    audio.volume = 0;
-                    audio.play().catch(e => console.log("Play failed"));
-                }
-                fadeInterval = setInterval(() => {
-                    if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05);
-                    else clearInterval(fadeInterval);
-                }, 150);
-                musicIcon.classList.remove('fa-pause');
-                musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
+                if (audio.paused) { audio.volume = 0; audio.play().catch(e => console.log(e)); }
+                fadeInterval = setInterval(() => { if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05); else clearInterval(fadeInterval); }, 150);
+                musicIcon.classList.remove('fa-pause'); musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
                 isPlaying = true;
             } else {
-                fadeInterval = setInterval(() => {
-                    if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05);
-                    else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); }
-                }, 150);
-                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc');
-                musicIcon.classList.add('fa-pause');
+                fadeInterval = setInterval(() => { if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05); else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); } }, 150);
+                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc'); musicIcon.classList.add('fa-pause');
                 isPlaying = false;
             }
         }
-        function toggleTheme() {
-            document.body.classList.toggle('theme-dark');
-            document.body.classList.toggle('theme-light');
-        }
+        function toggleTheme() { document.body.classList.toggle('theme-dark'); document.body.classList.toggle('theme-light'); }
         function copyToClipboard(text) {
             const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select();
             document.execCommand('copy'); document.body.removeChild(el);
@@ -484,7 +388,7 @@
                 petal.style.width = (Math.random() * 10 + 10) + 'px';
                 petal.style.height = petal.style.width;
                 petal.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C15.3 2 18 4.7 18 8C18 12.4 12 18.5 12 22C12 18.5 6 12.4 6 8C6 4.7 8.7 2 12 2Z"/></svg>`;
-                petal.style.setProperty('--max-opacity', (Math.random() * 0.4 + 0.2).toString());
+                petal.style.setProperty('--max-opacity', (Math.random() * 0.3 + 0.2).toString());
                 petal.style.left = Math.random() * 100 + 'vw';
                 petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 petal.style.animationDelay = (Math.random() * 5) + 's';
@@ -500,6 +404,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // CONFIG TERKONFIRMASI DARI image_ebdb37.png
         const firebaseConfig = {
             apiKey: "AIzaSyBLbFjb4p1OoVa6Ho4khwa6Q7EFnzaaRms",
             authDomain: "wedding-41754.firebaseapp.com",
@@ -514,50 +419,31 @@
         const db = getFirestore(app);
         const colRef = collection(db, 'ucapan_pernikahan');
 
-        let userAuth = null;
         let isListening = false;
 
-        // Login anonim dan mulai dengar data
-        const loginAndListen = async () => {
-            try {
-                if (!auth.currentUser) {
-                    const cred = await signInAnonymously(auth);
-                    userAuth = cred.user;
-                } else {
-                    userAuth = auth.currentUser;
-                }
-                
-                if (userAuth && !isListening) {
-                    startListening();
-                }
-            } catch (e) {
-                console.error("Login/Listen Error:", e);
-                document.getElementById('loading-text').innerText = "Gagal terhubung. Sila cek koneksi.";
-            }
-        };
-
-        function startListening() {
-            isListening = true;
-            onSnapshot(colRef, (snapshot) => {
-                const list = [];
-                snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
-                renderComments(list);
-            }, (error) => {
-                console.error("Sync Error:", error);
-                document.getElementById('loading-text').innerText = "Gagal sinkron data.";
-            });
-        }
-
+        // Login & Listen
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                userAuth = user;
-                if (!isListening) startListening();
+                console.log("Status: Terhubung");
+                if (!isListening) {
+                    isListening = true;
+                    onSnapshot(colRef, (snapshot) => {
+                        const list = [];
+                        snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+                        list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
+                        renderComments(list);
+                    }, (err) => {
+                        console.error("Firebase Error:", err);
+                        document.getElementById('loading-text').innerText = "Gagal memuat ucapan: " + err.message;
+                    });
+                }
+            } else {
+                signInAnonymously(auth).catch(e => {
+                    console.error("Auth Error:", e);
+                    document.getElementById('loading-text').innerText = "Gagal menghubungkan server.";
+                });
             }
         });
-
-        // Jalankan login saat load
-        loginAndListen();
 
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
@@ -571,10 +457,10 @@
                     <div class="w-10 h-10 rounded-full bg-white text-black flex-shrink-0 flex items-center justify-center font-bold text-lg">${(c.name||'G')[0].toUpperCase()}</div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h5 class="font-bold text-[10px] uppercase tracking-[0.4em] text-white">${c.name}</h5>
+                            <h5 class="font-bold text-[10px] uppercase tracking-[0.4em] text-white text-left">${c.name}</h5>
                             <span class="${badgeClass} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
                         </div>
-                        <p class="text-xs opacity-80 leading-relaxed font-light text-white">"${c.message}"</p>
+                        <p class="text-xs opacity-80 leading-relaxed font-light text-white text-left">"${c.message}"</p>
                     </div>`;
                 container.appendChild(div);
             });
@@ -587,10 +473,7 @@
             btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
 
             try {
-                // Pastikan auth siap sebelum kirim
-                if (!auth.currentUser) {
-                    await signInAnonymously(auth);
-                }
+                if (!auth.currentUser) await signInAnonymously(auth);
 
                 await addDoc(colRef, {
                     name: document.getElementById('wish-name').value,
@@ -599,10 +482,9 @@
                     timestamp: serverTimestamp()
                 });
                 document.getElementById('wish-form').reset();
-                // Opsional: berikan notifikasi sederhana
             } catch(e) { 
                 console.error("Gagal Kirim:", e);
-                alert("Gagal kirim ucapan: " + e.message); 
+                alert("Maaf, gagal kirim: " + e.message); 
             } finally { 
                 btn.innerHTML = originalText; 
                 btn.disabled = false; 
