@@ -36,7 +36,7 @@
             position: fixed;
             inset: 0;
             z-index: -10;
-            background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80');
+            background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&st=f5fb3b67&raw=1');
             background-size: cover;
             background-position: center;
             transition: all 1s ease-in-out;
@@ -139,7 +139,7 @@
         }
         .animate-fly { animation: flyAcross 8s cubic-bezier(0.35, 0.1, 0.25, 1) forwards; }
 
-        /* PETAL ANIMATION */
+        /* PETAL ANIMATION (Z-index 0) */
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: var(--max-opacity, 0.6); }
@@ -252,7 +252,7 @@
 
     <!-- Section: Cover -->
     <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out">
-        <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80');"></div>
+        <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale" style="background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&st=f5fb3b67&raw=1');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent"></div>
         <div class="noise-overlay opacity-10"></div>
         
@@ -288,7 +288,7 @@
 
                 <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30" data-aos="fade-up" data-aos-delay="300"></div>
 
-                <!-- Teks QS Diperbaiki (Lebih rapi, tidak panjang merusak, dan animasi fade-up standar) -->
+                <!-- Teks QS -->
                 <p class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="400">
                     "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
                 </p>
@@ -464,7 +464,7 @@
             </div>
         </section>
 
-        <!-- Wish Form & Comment Section (TERHUBUNG KE CLOUD) -->
+        <!-- Wish Form & Comment Section -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto">
             <h2 class="font-cinzel text-3xl text-center mb-6 tracking-widest uppercase" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="ornament mb-16 max-w-xs mx-auto" data-aos="fade-up" data-aos-delay="100"></div>
@@ -496,7 +496,6 @@
                         </div>
                     </div>
                     <div data-aos="fade-up" data-aos-delay="600">
-                        <!-- Tombol Kirim Diubah Warna Gelap Elegan, Bukan Putih -->
                         <button type="submit" id="submit-wish-btn" class="w-full py-5 bg-[#1a1a1a] text-white font-bold tracking-[0.5em] uppercase text-[10px] hover:bg-black transition shadow-lg duration-500 rounded-sm border border-white/10">Kirim Pesan</button>
                     </div>
                 </form>
@@ -529,15 +528,13 @@
     <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // AOS diinisialisasi SATU KALI SAJA saat scroll ke bawah
         AOS.init({ 
             duration: 1000, 
-            once: true, // KUNCI: Animasi tidak akan berulang saat Anda scroll ke atas
+            once: true, 
             easing: 'ease-out-cubic',
             offset: 50
         });
 
-        // Generate 20 Bunga/Daun Jatuh
         function initPetals() {
             const container = document.getElementById('petal-container');
             const petalCount = 20; 
@@ -582,7 +579,6 @@
             }
         }
 
-        // Animasi Rekening
         document.addEventListener('DOMContentLoaded', () => {
             const rekElement = document.getElementById('rek-number');
             const targetRek = '0330 0105 8799 505'; 
@@ -679,13 +675,12 @@
         }
     </script>
 
-    <!-- Firebase Scripts (Tersambung ke Cloud Database) -->
+    <!-- Firebase Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Konfigurasi otomatis
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -694,7 +689,6 @@
 
         let currentUser = null;
 
-        // Autentikasi Wajib sebelum mengakses Cloud
         const initAuth = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -726,7 +720,6 @@
                     comments.push({ id: doc.id, ...doc.data() });
                 });
                 
-                // Urutkan komentar dari yang paling baru
                 comments.sort((a, b) => {
                     const timeA = a.timestamp ? a.timestamp.toMillis() : 0;
                     const timeB = b.timestamp ? b.timestamp.toMillis() : 0;
@@ -754,7 +747,6 @@
                     ? '<span class="bg-green-500/20 text-green-600 theme-dark:text-green-400 text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">Hadir</span>'
                     : '<span class="bg-red-500/20 text-red-600 theme-dark:text-red-400 text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">Tidak Hadir</span>';
                 
-                // Hitung waktu (Time Ago)
                 let timeString = 'Baru saja';
                 if(c.timestamp) {
                     const seconds = Math.floor((Date.now() - c.timestamp.toMillis()) / 1000);
@@ -780,7 +772,6 @@
             });
         }
 
-        // Handle Submit ke Cloud Database
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if(!currentUser) {
