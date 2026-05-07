@@ -637,24 +637,41 @@
         let fadeInterval;
 
         function toggleMusic(forcePlay = false) {
+            // Hentikan animasi fade sebelumnya jika ada
+            clearInterval(fadeInterval);
+
             if (forcePlay || !isPlaying) {
-                audio.volume = 0;
-                audio.play().catch(e => console.log("Interaksi user dibutuhkan untuk memutar musik"));
+                // FADE IN
+                if (audio.paused) {
+                    audio.volume = 0;
+                    audio.play().catch(e => console.log("Interaksi user dibutuhkan untuk memutar musik"));
+                }
                 
-                clearInterval(fadeInterval);
                 fadeInterval = setInterval(() => {
                     if (audio.volume < maxVolume) {
+                        // Tambah volume perlahan-lahan
                         audio.volume = Math.min(maxVolume, audio.volume + 0.05);
                     } else {
                         clearInterval(fadeInterval);
                     }
-                }, 200);
+                }, 150);
 
                 musicIcon.classList.remove('fa-pause');
                 musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
                 isPlaying = true;
             } else {
-                audio.pause();
+                // FADE OUT
+                fadeInterval = setInterval(() => {
+                    if (audio.volume > 0.05) {
+                        // Kurangkan volume perlahan-lahan
+                        audio.volume = Math.max(0, audio.volume - 0.05);
+                    } else {
+                        audio.volume = 0;
+                        audio.pause();
+                        clearInterval(fadeInterval);
+                    }
+                }, 150);
+
                 musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc');
                 musicIcon.classList.add('fa-pause');
                 isPlaying = false;
@@ -678,41 +695,56 @@
     <!-- Firebase Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        let currentUser = null;
-
-        const initAuth = async () => {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch(e) {
-                console.error("Gagal terhubung ke autentikasi Cloud:", e);
-            }
+        // ==========================================
+        // KONFIGURASI DATABASE FIREBASE MILIKMU
+        // ==========================================
+        // Ganti nilai-nilai di bawah ini dengan konfigurasi dari Firebase Console milikmu.
+        // Jika masih "API_KEY_KAMU", sistem otomatis menggunakan Local Storage agar tidak error di Vercel.
+        const firebaseConfig = {
+            apiKey: "API_KEY_KAMU",
+            authDomain: "PROJECT_ID.firebaseapp.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
         };
 
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) {
-                loadComments();
-            }
-        });
+        const isUsingCloud = firebaseConfig.apiKey !== "API_KEY_KAMU";
+        
+        let db, auth;
+        let currentUser = null;
 
-        initAuth();
+        if (isUsingCloud) {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
 
-        function loadComments() {
+            const initAuth = async () => {
+                try {
+                    await signInAnonymously(auth);
+                } catch(e) {
+                    console.error("Gagal terhubung ke autentikasi Cloud:", e);
+                }
+            };
+
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) loadCommentsCloud();
+            });
+
+            initAuth();
+        } else {
+            // Gunakan Local Storage jika belum ada kunci Firebase
+            document.addEventListener("DOMContentLoaded", loadCommentsLocal);
+        }
+
+        // FUNGSI MUAT KOMEN DARI FIREBASE (CLOUD CLOUD)
+        function loadCommentsCloud() {
             if (!currentUser) return;
-            const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
+            const commentsRef = collection(db, 'ucapan_pernikahan');
             
             onSnapshot(commentsRef, (snapshot) => {
                 const comments = [];
@@ -730,6 +762,26 @@
             }, (error) => {
                 console.error("Gagal memuat ucapan dari server:", error);
             });
+        }
+
+        // FUNGSI MUAT KOMEN DARI LOCAL STORAGE (FALLBACK VERCEL)
+        function loadCommentsLocal() {
+            const saved = localStorage.getItem('ucapan_pernikahan');
+            let comments = [];
+            if (saved) {
+                comments = JSON.parse(saved);
+                comments.forEach(c => {
+                    if (c.timeMs) {
+                        c.timestamp = { toMillis: () => c.timeMs };
+                    }
+                });
+                comments.sort((a, b) => {
+                    const timeA = a.timestamp ? a.timestamp.toMillis() : 0;
+                    const timeB = b.timestamp ? b.timestamp.toMillis() : 0;
+                    return timeB - timeA;
+                });
+            }
+            renderComments(comments);
         }
 
         function renderComments(comments) {
@@ -774,10 +826,6 @@
 
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if(!currentUser) {
-                alert("Harap tunggu, sedang menghubungkan ke server...");
-                return;
-            }
             
             const btn = document.getElementById('submit-wish-btn');
             const originalText = btn.innerHTML;
@@ -788,22 +836,38 @@
             const message = document.getElementById('wish-message').value;
             const attendance = document.getElementById('wish-attendance').value;
             
-            try {
-                const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
-                await addDoc(commentsRef, {
-                    name,
-                    message,
-                    attendance,
-                    timestamp: serverTimestamp()
-                });
+            if (isUsingCloud) {
+                if(!currentUser) {
+                    alert("Sedang menghubungkan ke server...");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+                try {
+                    const commentsRef = collection(db, 'ucapan_pernikahan');
+                    await addDoc(commentsRef, {
+                        name,
+                        message,
+                        attendance,
+                        timestamp: serverTimestamp()
+                    });
+                    document.getElementById('wish-form').reset();
+                } catch(err) {
+                    console.error("Gagal mengirim pesan: ", err);
+                    alert("Maaf, gagal mengirim pesan ke database.");
+                }
+            } else {
+                // Simpan ke Local Storage jika tidak pakai Cloud
+                const saved = localStorage.getItem('ucapan_pernikahan');
+                let comments = saved ? JSON.parse(saved) : [];
+                comments.push({ name, message, attendance, timeMs: Date.now() });
+                localStorage.setItem('ucapan_pernikahan', JSON.stringify(comments));
                 document.getElementById('wish-form').reset();
-            } catch(err) {
-                console.error("Gagal mengirim pesan: ", err);
-                alert("Maaf, gagal mengirim pesan saat ini.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                loadCommentsLocal();
             }
+
+            btn.innerHTML = originalText;
+            btn.disabled = false;
         });
     </script>
 </body>
