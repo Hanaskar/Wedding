@@ -34,7 +34,7 @@
 
         @keyframes subtleZoom {
             0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
 
@@ -101,7 +101,6 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
-            transition: all 1s ease;
         }
         .theme-light .glass-card {
             background: rgba(255, 255, 255, 0.65);
@@ -150,9 +149,9 @@
             100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        /* ANTI WHITE BOX FIX */
+        /* ANTI WHITE BOX FIX - Memaksa input tetap transparan gelap */
         .form-input-custom {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             padding: 14px 18px !important;
@@ -160,31 +159,15 @@
             transition: all 0.3s;
             backdrop-filter: blur(5px);
             width: 100%;
-            font-size: 14px;
         }
         .theme-light .form-input-custom {
-            background-color: rgba(0, 0, 0, 0.03) !important;
+            background-color: rgba(255, 255, 255, 0.5) !important;
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
             color: #1a1a1a !important;
-        }
-        .form-input-custom:focus {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            border-color: #ffffff !important;
-            outline: none;
-        }
-        .form-input-custom::placeholder {
-            color: rgba(255, 255, 255, 0.4) !important;
-        }
-        .theme-light .form-input-custom::placeholder {
-            color: rgba(0, 0, 0, 0.4) !important;
         }
         .form-input-custom option {
             background-color: #1a1a1a;
             color: #ffffff;
-        }
-        .theme-light .form-input-custom option {
-            background-color: #ffffff;
-            color: #1a1a1a;
         }
 
         .bank-card {
@@ -365,10 +348,14 @@
                     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/brushed-alum.png')] pointer-events-none mix-blend-overlay"></div>
                     <div class="relative z-10 flex justify-between items-start">
                         <div class="bg-white px-3 py-1.5 rounded-md"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BRI_2020.svg/1024px-BRI_2020.svg.png" class="h-5"></div>
+                        <svg class="w-10 h-10 opacity-70 text-yellow-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="2" y="5" width="20" height="14" rx="2" ry="2" fill="rgba(234, 179, 8, 0.2)"></rect>
+                            <line x1="2" y1="9" x2="22" y2="9"></line><line x1="2" y1="14" x2="22" y2="14"></line>
+                        </svg>
                     </div>
                     <div class="relative z-10 mt-auto">
                         <p class="text-[9px] opacity-70 uppercase tracking-widest mb-1">No Rekening</p>
-                        <p class="text-xl md:text-2xl font-mono tracking-[0.15em] mb-4">0330 0105 8799 505</p>
+                        <p id="rek-number" class="text-xl md:text-2xl font-mono tracking-[0.15em] mb-4">0330 0105 8799 505</p>
                         <div class="flex justify-between items-end">
                             <div>
                                 <p class="text-[9px] opacity-70 uppercase tracking-widest mb-1">Atas Nama</p>
@@ -381,7 +368,7 @@
             </div>
         </section>
 
-        <!-- RSVP Section (FIXED REALTIME) -->
+        <!-- RSVP Section (FIXED LIVE) -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto">
             <h2 class="font-cinzel text-3xl text-center mb-6 tracking-widest uppercase" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="ornament mb-16 max-w-xs mx-auto"></div>
@@ -406,9 +393,8 @@
                     <button type="submit" id="submit-wish-btn" class="w-full py-5 bg-[#1a1a1a] text-white font-bold tracking-[0.5em] uppercase text-[10px] hover:bg-black transition shadow-lg rounded-sm border border-white/10">Kirim Pesan</button>
                 </form>
 
-                <!-- Ruangan Komen Live -->
                 <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar text-left">
-                    <p class="text-xs opacity-50 italic text-center py-10">Memuat ucapan dari tamu...</p>
+                    <p class="text-xs opacity-50 italic text-center py-10">Memuat ucapan...</p>
                 </div>
             </div>
         </section>
@@ -424,6 +410,7 @@
 
     <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-current text-white theme-dark:text-black theme-light:text-white text-[9px] font-bold tracking-[0.4em] uppercase opacity-0 transition-opacity z-[100] pointer-events-none shadow-2xl rounded-sm">Disalin ke Clipboard</div>
 
+    <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true, easing: 'ease-out-cubic', offset: 50 });
@@ -449,13 +436,24 @@
         function toggleMusic(forcePlay = false) {
             clearInterval(fadeInterval);
             if (forcePlay || !isPlaying) {
-                audio.volume = 0; audio.play().catch(e => console.log("Play failed"));
-                fadeInterval = setInterval(() => { if(audio.volume < 0.6) audio.volume += 0.05; else clearInterval(fadeInterval); }, 150);
-                musicIcon.classList.add('animate-spin-slow', 'fa-compact-disc'); musicIcon.classList.remove('fa-pause');
+                if (audio.paused) {
+                    audio.volume = 0;
+                    audio.play().catch(e => console.log("Music interaction required"));
+                }
+                fadeInterval = setInterval(() => {
+                    if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05);
+                    else clearInterval(fadeInterval);
+                }, 150);
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
                 isPlaying = true;
             } else {
-                fadeInterval = setInterval(() => { if(audio.volume > 0.05) audio.volume -= 0.05; else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); } }, 150);
-                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc'); musicIcon.classList.add('fa-pause');
+                fadeInterval = setInterval(() => {
+                    if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05);
+                    else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); }
+                }, 150);
+                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc');
+                musicIcon.classList.add('fa-pause');
                 isPlaying = false;
             }
         }
@@ -466,9 +464,27 @@
             const toast = document.getElementById('toast'); toast.classList.remove('opacity-0');
             setTimeout(() => toast.classList.add('opacity-0'), 2500);
         }
+
+        // Bunga Gugur Script
+        function initPetals() {
+            const container = document.getElementById('petal-container');
+            for (let i = 0; i < 20; i++) {
+                let petal = document.createElement('div');
+                petal.className = 'petal absolute text-current mix-blend-screen';
+                petal.style.width = (Math.random() * 10 + 10) + 'px';
+                petal.style.height = petal.style.width;
+                petal.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C15.3 2 18 4.7 18 8C18 12.4 12 18.5 12 22C12 18.5 6 12.4 6 8C6 4.7 8.7 2 12 2Z"/></svg>`;
+                petal.style.setProperty('--max-opacity', (Math.random() * 0.4 + 0.2).toString());
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                petal.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(petal);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', initPetals);
     </script>
 
-    <!-- Firebase System -->
+    <!-- Firebase Connection -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -493,14 +509,18 @@
         // Login anonim segera setelah load
         const initAuth = async () => {
             try {
-                await signInAnonymously(auth);
-            } catch(e) { console.error("Login Gagal:", e); }
+                const userCredential = await signInAnonymously(auth);
+                userAuth = userCredential.user;
+                return userAuth;
+            } catch(e) { 
+                console.error("Login Gagal:", e);
+                return null;
+            }
         };
 
         onAuthStateChanged(auth, (user) => {
             userAuth = user;
             if (user) {
-                console.log("Login Berhasil:", user.uid);
                 loadComments();
             }
         });
@@ -514,31 +534,29 @@
             onSnapshot(commentsRef, (snapshot) => {
                 const list = [];
                 snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                // Urutkan manual berdasarkan waktu terbaru
                 list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
                 renderComments(list);
             }, (error) => {
                 console.error("Gagal sinkronisasi data:", error);
-                document.getElementById('wishes-container').innerHTML = '<p class="text-xs text-red-400 text-center">Gagal memuat data. Cek Rules Firestore Anda.</p>';
             });
         }
 
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
-            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4">Belum ada ucapan.</p>';
+            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4 text-white">Belum ada ucapan.</p>';
             
             comments.forEach(c => {
                 const badgeClass = c.attendance === 'Hadir' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400';
                 const div = document.createElement('div');
                 div.className = 'flex gap-4 p-4 border-b border-white/5 last:border-0';
                 div.innerHTML = `
-                    <div class="w-10 h-10 rounded-full bg-current text-black flex-shrink-0 flex items-center justify-center font-bold text-lg">${(c.name||'G')[0].toUpperCase()}</div>
+                    <div class="w-10 h-10 rounded-full bg-white text-black flex-shrink-0 flex items-center justify-center font-bold text-lg">${(c.name||'G')[0].toUpperCase()}</div>
                     <div class="flex-1">
                         <div class="flex justify-between items-center mb-1">
-                            <h5 class="font-bold text-[10px] uppercase tracking-[0.4em]">${c.name}</h5>
+                            <h5 class="font-bold text-[10px] uppercase tracking-[0.4em] text-white">${c.name}</h5>
                             <span class="${badgeClass} text-[8px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${c.attendance}</span>
                         </div>
-                        <p class="text-xs opacity-80 leading-relaxed font-light">"${c.message}"</p>
+                        <p class="text-xs opacity-80 leading-relaxed font-light text-white">"${c.message}"</p>
                     </div>`;
                 container.appendChild(div);
             });
@@ -547,15 +565,19 @@
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            if(!userAuth) {
-                alert("Menyambungkan ulang ke server...");
-                await initAuth();
-                return;
-            }
-
             const btn = document.getElementById('submit-wish-btn');
             const originalText = btn.innerHTML;
             btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
+
+            if(!userAuth) {
+                const loggedIn = await initAuth();
+                if(!loggedIn) {
+                    alert("Koneksi gagal. Sila coba lagi sebentar.");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+            }
 
             try {
                 const commentsRef = collection(db, 'artifacts', appId, 'public', 'data', 'comments');
@@ -568,7 +590,7 @@
                 document.getElementById('wish-form').reset();
             } catch(e) { 
                 console.error("Gagal Kirim:", e);
-                alert("Gagal mengirim! Pastikan Rules Firestore di set ke 'allow read, write: if true;'"); 
+                alert("Gagal mengirim ucapan."); 
             } finally { 
                 btn.innerHTML = originalText; 
                 btn.disabled = false; 
