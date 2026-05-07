@@ -62,8 +62,9 @@
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
         }
-        .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.85); }
-        .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.82); }
+        /* Penyesuaian Kegelapan (Overlay) - Dibuat lebih terang sedikit */
+        .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.75); }
+        .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.70); }
 
         /* Animasi Petunjuk Skrol */
         @keyframes bounceDown {
@@ -162,7 +163,7 @@
         .animate-spin-slow { animation: spin 8s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Animasi Burung Terbang */
+        /* Kawanan Burung */
         @keyframes flyAcross {
             0% { transform: translate(-30vw, 40vh) scale(0.5) rotate(-10deg); opacity: 0; }
             15% { opacity: 0.8; }
@@ -171,7 +172,7 @@
         }
         .animate-fly { animation: flyAcross 14s cubic-bezier(0.35, 0.1, 0.25, 1) forwards; }
 
-        /* Animasi Kelopak Bunga */
+        /* Kelopak Bunga */
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.6; }
@@ -185,7 +186,7 @@
             animation: fall linear infinite;
         }
 
-        /* Lightbox & Pemuatan */
+        /* Lightbox */
         #lightbox {
             display: none;
             position: fixed;
@@ -236,7 +237,7 @@
         }
         .form-input-custom:focus { opacity: 0.9; }
 
-        /* Gaya Butang Kontras */
+        /* Butang Gaya */
         .btn-style {
             transition: all 0.5s ease;
         }
@@ -248,7 +249,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: currentColor; opacity: 0.5; border-radius: 10px; }
     </style>
 </head>
-<body class="font-poppins theme-dark transition-colors duration-700 locked relative min-h-screen text-current">
+<body class="font-poppins theme-dark transition-colors duration-700 locked relative min-h-screen">
 
     <!-- MODAL LIGHTBOX -->
     <div id="lightbox" onclick="closeLightbox()">
@@ -293,7 +294,7 @@
     </div>
     <div class="noise-overlay"></div>
 
-    <!-- Muzik & Tema -->
+    <!-- Tetapan Muzik & Tema -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
         <button onclick="toggleTheme()" id="theme-btn" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center shadow-2xl border border-black/10 hover:scale-110 transition-transform">
             <i class="fa-solid fa-circle-half-stroke"></i>
@@ -324,7 +325,7 @@
         </div>
     </section>
 
-    <!-- UTAMA -->
+    <!-- KANDUNGAN UTAMA -->
     <main id="main-content" class="hidden opacity-0 transition-opacity duration-1000 relative z-10">
         
         <!-- Pembukaan -->
@@ -347,7 +348,7 @@
             <div class="ornament mb-20 max-w-xs mx-auto text-current" data-aos="zoom-in"></div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-8 max-w-5xl mx-auto w-full text-current">
-                <!-- Lelaki -->
+                <!-- Mempelai Lelaki -->
                 <div class="flex flex-col items-center text-center" data-aos="fade-up">
                     <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in" onclick="openLightbox('https://www.dropbox.com/scl/fi/03gjazja0mmgc65c25xij/IMG_3435.jpg?rlkey=yu4qodtki9ch8g915i7b6f59z&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/03gjazja0mmgc65c25xij/IMG_3435.jpg?rlkey=yu4qodtki9ch8g915i7b6f59z&raw=1" alt="Muhammad Maulida Akbari" class="w-full aspect-[4/5] object-cover img-standard">
@@ -362,11 +363,11 @@
                     </a>
                     <p class="text-[10px] font-light tracking-widest opacity-60">Bapak Nurrahman & Ibu Misna</p>
                 </div>
-                <!-- Simbol & -->
+                <!-- & -->
                 <div class="flex justify-center py-8 md:py-0" data-aos="zoom-in">
                     <span class="text-6xl md:text-8xl font-great-vibes opacity-30">&</span>
                 </div>
-                <!-- Perempuan -->
+                <!-- Mempelai Perempuan -->
                 <div class="flex flex-col items-center text-center" data-aos="fade-up">
                     <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in" onclick="openLightbox('https://www.dropbox.com/scl/fi/gwumqwtuyu3zvoje1p9i2/IMG_3412.jpg?rlkey=algl3p5wo4o0xhj13p17cq42r&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/gwumqwtuyu3zvoje1p9i2/IMG_3412.jpg?rlkey=algl3p5wo4o0xhj13p17cq42r&raw=1" alt="Wahidah" class="w-full aspect-[4/5] object-cover img-standard">
@@ -384,7 +385,7 @@
             </div>
         </section>
 
-        <!-- Galeri (Grid 10 Foto) -->
+        <!-- Galeri Momen (Grid 10 Foto) -->
         <section id="gallery" class="py-32 px-6 relative">
             <div class="max-w-6xl mx-auto glass-card p-8 md:p-12 lg:p-16 border-current/10 text-current" data-aos="fade-up">
                 <div class="text-center mb-16">
@@ -451,7 +452,7 @@
                         <span class="slot-number" data-target="06">00</span> . 
                         <span class="slot-number" data-target="26">00</span>
                     </div>
-                    <p class="tracking-widest font-light mb-4">13.00 - Selesai WITA</p>
+                    <p class="tracking-widest font-light mb-4 text-current">13.00 - Selesai WITA</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10">Masjid Raya Baiturrahman <br> Jakarta</p>
                     <a href="https://maps.app.goo.gl/uXv4K6GZ2qA1qL4D7" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 hover:scale-105 transition-transform shadow-xl">
                         MAPS <i class="fa-solid fa-map-location-dot"></i>
@@ -465,7 +466,7 @@
                         <span class="slot-number" data-target="06">00</span> . 
                         <span class="slot-number" data-target="26">00</span>
                     </div>
-                    <p class="tracking-widest font-light mb-4">07.00 - Selesai WITA</p>
+                    <p class="tracking-widest font-light mb-4 text-current">07.00 - Selesai WITA</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10">Gedung Serbaguna <br> Jakarta Pusat</p>
                     <a href="https://maps.app.goo.gl/uXv4K6GZ2qA1qL4D7" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 hover:scale-105 transition-transform shadow-xl">
                         MAPS <i class="fa-solid fa-map-location-dot"></i>
@@ -545,8 +546,8 @@
              <h2 class="font-great-vibes text-5xl mb-6 text-current" data-aos="zoom-in">Until Forever</h2>
              <p class="font-cinzel font-bold text-lg tracking-[0.8em] mb-12 uppercase text-current" data-aos="fade-up">Akbari & Wahidah</p>
 
-             <!-- Ucapan Penutup -->
-             <div class="max-w-2xl mx-auto px-6 mb-20" data-aos="fade-up" data-aos-delay="200">
+             <!-- UCAPAN TERIMA KASIH (Baru) -->
+             <div class="max-w-2xl mx-auto px-6 mb-20 text-current" data-aos="fade-up" data-aos-delay="200">
                 <h3 class="font-cinzel text-xl font-bold tracking-widest mb-4">Terima Kasih</h3>
                 <p class="text-sm font-light tracking-wide opacity-80 leading-relaxed">
                     Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i sekalian.
@@ -559,12 +560,7 @@
         </footer>
     </main>
 
-    <!-- Notifikasi Toast -->
-    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-current text-white theme-dark:text-black theme-light:text-white text-[9px] font-bold tracking-[0.4em] uppercase opacity-0 transition-opacity z-[100] pointer-events-none rounded-sm shadow-xl">
-        Disalin ke Papan Klip
-    </div>
-
-    <!-- Skrip UI -->
+    <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1200, once: true, offset: 100, easing: 'ease-out-quad' });
@@ -660,7 +656,7 @@
             audio.volume = 0; audio.play().catch(() => {}); fadeAudio(1, 3000); isPlaying = true;
         }
 
-        // Lightbox
+        // Lightbox Functions
         const lb = document.getElementById('lightbox');
         const lbImg = document.getElementById('lightbox-img');
         const lbLoader = document.getElementById('lightbox-loader');
@@ -701,7 +697,7 @@
             const container = document.getElementById('wishes-container');
             if (container.querySelector('p.italic')) container.innerHTML = '';
             const newWish = document.createElement('div');
-            newWish.className = 'p-4 glass-card border-l-2 border-l-current mb-4';
+            newWish.className = 'p-4 glass-card border-l-2 border-l-current mb-4 text-left';
             newWish.innerHTML = `<div class="flex justify-between items-center mb-1"><span class="font-bold text-xs uppercase tracking-widest text-current">${name}</span><span class="text-[9px] px-2 py-0.5 border border-current opacity-60 text-current">${att}</span></div><p class="text-[11px] opacity-80 leading-relaxed italic text-current">"${msg}"</p>`;
             container.prepend(newWish);
             this.reset();
