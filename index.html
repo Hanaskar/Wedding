@@ -223,14 +223,14 @@
             color: #1a1a1a !important;
         }
 
-        /* ANTI WHITE BOX FIX - Memaksa input tetap transparan gelap */
+        /* PERBAIKAN INPUT: Selalu Gelap Transparan */
         .form-input-custom {
             background-color: rgba(0, 0, 0, 0.4) !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             padding: 14px 18px !important;
             border-radius: 4px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             width: 100%;
         }
@@ -313,11 +313,11 @@
 
     <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center opacity-50 bg-zoom-animate" style="background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent"></div>
         <div class="relative z-10 h-full flex flex-col items-center justify-center text-white text-center px-6">
             <h3 class="text-[10px] tracking-[0.8em] mb-6 uppercase font-light">Undangan Pernikahan</h3>
             <h1 class="font-cinzel text-5xl md:text-7xl mb-4 tracking-widest drop-shadow-2xl">Akbari <span class="block text-3xl font-great-vibes my-3 text-white/50">&</span> Wahidah</h1>
-            <p class="text-xs tracking-[0.4em] mb-16 font-light opacity-70 uppercase">SABTU, 26 OKTOBER 2024</p>
+            <p class="text-xs tracking-[0.4em] mb-16 font-light opacity-70 uppercase">JUNI 2026</p>
             
             <div class="p-10 bg-white/5 backdrop-blur-md rounded-none max-w-sm w-full border border-white/20 mx-auto">
                 <p class="text-[9px] uppercase tracking-[0.4em] mb-4 opacity-60">Kepada Yth.</p>
@@ -397,45 +397,39 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/i9l5x31lvaffangxcf6s5/IMG_3351.jpg?rlkey=yr1tcno83k5880ql8adok18xh&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/i9l5x31lvaffangxcf6s5/IMG_3351.jpg?rlkey=yr1tcno83k5880ql8adok18xh&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 1">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/xpl6ygj7odu0puncia8je/IMG_3336.jpg?rlkey=rt1ubkgh4wulp5zrk4f4rwdc3&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/xpl6ygj7odu0puncia8je/IMG_3336.jpg?rlkey=rt1ubkgh4wulp5zrk4f4rwdc3&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 2">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 3">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 4">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/g1forut91f658zdgcrcku/IMG_2947.jpg?rlkey=8bu70raide4d4aayn6mt8rvx8&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/g1forut91f658zdgcrcku/IMG_2947.jpg?rlkey=8bu70raide4d4aayn6mt8rvx8&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 5">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/qplc5zwazhwtbwfk40k2c/IMG_2949.jpg?rlkey=fnvdngdwvqijzpk1l4holtc77&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/qplc5zwazhwtbwfk40k2c/IMG_2949.jpg?rlkey=fnvdngdwvqijzpk1l4holtc77&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 6">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/3dlkpx3bmxos8au3p3x6z/IMG_3027.jpg?rlkey=bexhdr0pczl487uoifdexy4rh&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/3dlkpx3bmxos8au3p3x6z/IMG_3027.jpg?rlkey=bexhdr0pczl487uoifdexy4rh&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 7">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/fniv5u6p96gmfe0ol81n3/IMG_3046.jpg?rlkey=x4dkx87v4w448lx8rr50qczys&raw=1')">
+                        <img src="https://www.dropbox.com/scl/fi/fniv5u6p96gmfe0ol81n3/IMG_3046.jpg?rlkey=x4dkx87v4w448lx8rr50qczys&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 8">
                     </div>
                     <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/zfxedojyg2okpcyf6xp4p/IMG_3090.jpg?rlkey=a33hi2bps6pn2740h4tbc3yrp&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/zfxedojyg2okpcyf6xp4p/IMG_3090.jpg?rlkey=a33hi2bps6pn2740h4tbc3yrp&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 9">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/nol56ap1yrwa1qzwyc30a/IMG_3286.jpg?rlkey=qjtxdpa1rctxfkwojlj792g61&raw=1')">
-                        <img src="https://www.dropbox.com/scl/fi/nol56ap1yrwa1qzwyc30a/IMG_3286.jpg?rlkey=qjtxdpa1rctxfkwojlj792g61&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 10">
-                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1')">
+                        <img src="https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 10">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Waktu & Tempat (Banjarbaru) -->
+        <!-- Waktu & Tempat -->
         <section id="event" class="py-24 px-6 overflow-hidden text-center text-current">
             <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase text-current" data-aos="fade-up">Masa & Tempat</h2>
             <div class="ornament mb-16 max-w-xs mx-auto text-current" data-aos="zoom-in"></div>
@@ -443,9 +437,9 @@
                 <div class="glass-card p-12 flex flex-col items-center w-full" data-aos="fade-up">
                     <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mb-8">Akad Nikah</h3>
                     <div class="text-3xl font-light mb-6">
-                        <span class="slot-number" data-target="26">00</span> . 
-                        <span class="slot-number" data-target="10">00</span> . 
-                        <span class="slot-number" data-target="24">00</span>
+                        <span class="slot-number" data-target="05">00</span> . 
+                        <span class="slot-number" data-target="06">00</span> . 
+                        <span class="slot-number" data-target="26">00</span>
                     </div>
                     <p class="tracking-widest font-light mb-4 text-current">09.00 WITA - Selesai</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10 text-sm">Masjid Agung Al-Munawwarah <br> Banjarbaru</p>
@@ -456,9 +450,9 @@
                 <div class="glass-card p-12 flex flex-col items-center w-full" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mb-8">Resepsi</h3>
                     <div class="text-3xl font-light mb-6">
-                        <span class="slot-number" data-target="26">00</span> . 
-                        <span class="slot-number" data-target="10">00</span> . 
-                        <span class="slot-number" data-target="24">00</span>
+                        <span class="slot-number" data-target="07">00</span> . 
+                        <span class="slot-number" data-target="06">00</span> . 
+                        <span class="slot-number" data-target="26">00</span>
                     </div>
                     <p class="tracking-widest font-light mb-4 text-current">11.00 WITA - Selesai</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10 text-sm text-center">Grand Dafam Q Hotel <br> Banjarbaru (Q Mall)</p>
@@ -469,7 +463,7 @@
             </div>
         </section>
 
-        <!-- Hadiah (ATM BRI Style) -->
+        <!-- Hadiah -->
         <section id="gift" class="py-24 px-6 text-center text-current">
             <div class="max-w-3xl mx-auto glass-card p-8 md:p-16 border-b-4 border-b-current" data-aos="fade-up">
                 <h2 class="font-cinzel text-2xl mb-6 tracking-widest uppercase text-current" data-aos="fade-up">Hadiah Pernikahan</h2>
@@ -478,7 +472,7 @@
                     Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui saluran di bawah ini.
                 </p>
                 
-                <div class="relative w-full max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-2xl p-5 sm:p-6 flex flex-col justify-between bank-card transition-transform hover:scale-105 duration-500" data-aos="flip-left">
+                <div class="relative w-full max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-2xl p-5 sm:p-6 flex flex-col justify-between bank-card transition-transform hover:scale-105 duration-500 mx-auto" data-aos="flip-left">
                     <div class="relative z-10 flex justify-between items-start mb-8 sm:mb-0">
                         <div class="bg-white px-3 py-1.5 rounded-md shadow-sm">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/BRI_2020.svg/1024px-BRI_2020.svg.png" class="h-5" alt="BRI">
@@ -487,7 +481,7 @@
                     </div>
 
                     <div class="relative z-10 text-left mt-auto">
-                        <p class="text-[9px] opacity-70 uppercase tracking-[0.2em] mb-2">No Rekening</p>
+                        <p class="text-[9px] opacity-70 uppercase tracking-[0.2em] mb-2 text-white/80">No Rekening</p>
                         <div id="rek-number" class="text-lg sm:text-xl md:text-2xl font-mono tracking-[0.05em] sm:tracking-[0.15em] mb-5 flex flex-wrap gap-x-2 text-white justify-center sm:justify-start">
                             <span class="slot-number" data-target="0330">0000</span>
                             <span class="slot-number" data-target="0105">0000</span>
@@ -508,20 +502,20 @@
             </div>
         </section>
 
-        <!-- RSVP LIVE (GOOGLE SHEETS) -->
+        <!-- RSVP Section (GOOGLE SHEETS LIVE) -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto text-current text-center">
             <h2 class="font-cinzel text-3xl mb-16 tracking-widest uppercase text-current" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="glass-card p-10 md:p-16 border-current/10 text-current mx-auto" data-aos="fade-up">
                 <form id="wish-form" class="space-y-6">
-                    <div data-aos="fade-up"><input type="text" id="wish-name" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm outline-none text-center" placeholder="NAMA ANDA" required></div>
+                    <div data-aos="fade-up"><input type="text" id="wish-name" class="form-input-custom text-center" placeholder="NAMA ANDA" required></div>
                     <div data-aos="fade-up" data-aos-delay="100">
-                        <select id="wish-attendance" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm outline-none cursor-pointer text-center" required>
+                        <select id="wish-attendance" class="form-input-custom cursor-pointer text-center" required>
                             <option value="" disabled selected>KONFIRMASI KEHADIRAN</option>
                             <option value="Hadir">Hadir</option>
                             <option value="Tidak Hadir">Tidak Hadir</option>
                         </select>
                     </div>
-                    <div data-aos="fade-up" data-aos-delay="200"><textarea id="wish-message" rows="4" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm resize-none outline-none text-center" placeholder="UCAPAN & DOA..." required></textarea></div>
+                    <div data-aos="fade-up" data-aos-delay="200"><textarea id="wish-message" rows="4" class="form-input-custom resize-none text-center" placeholder="UCAPAN & DOA..." required></textarea></div>
                     <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center gap-4">
                         <button type="submit" id="submit-wish-btn" class="btn-style w-full py-5 font-bold tracking-[0.5em] uppercase text-[10px] hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg">
                             KIRIM <i class="fa-solid fa-paper-plane"></i>
@@ -537,17 +531,14 @@
         <footer class="py-32 text-center overflow-hidden text-current">
              <h2 class="font-great-vibes text-5xl mb-6 text-current" data-aos="zoom-in">Until Forever</h2>
              <p class="font-cinzel font-bold text-lg tracking-[0.8em] mb-12 uppercase text-current" data-aos="fade-up">Akbari & Wahidah</p>
-             <p class="text-[10px] tracking-[0.6em] uppercase mb-16 opacity-60 text-current">26 . 10 . 2024</p>
-
              <div class="max-w-2xl mx-auto px-6 mb-20 text-current" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="font-cinzel text-xl font-bold tracking-widest mb-4">Terima Kasih</h3>
+                <h3 class="font-cinzel text-xl font-bold tracking-widest mb-4 uppercase">Terima Kasih</h3>
                 <p class="text-sm font-light tracking-wide opacity-80 leading-relaxed">
                     Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i sekalian.
                 </p>
              </div>
-
              <div class="pt-10 border-t border-current/10 w-48 mx-auto text-current" data-aos="zoom-in">
-                <p class="text-[8px] tracking-[0.6em] uppercase font-bold opacity-80">© 2024 by HANASKAR.ID</p>
+                <p class="text-[8px] tracking-[0.6em] uppercase font-bold opacity-80">© 2026 by HANASKAR.ID</p>
              </div>
         </footer>
     </main>
@@ -557,7 +548,7 @@
     <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // URL GOOGLE SCRIPT ANDA
+        // URL GOOGLE APPS SCRIPT ANDA
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcBumexD7MyhqRA8s1-16-ES9czRz6IQV0YKe2Sfk9KEHJupi5l4CGTi5ZF6VjP4ER/exec";
 
         AOS.init({ duration: 1200, once: true, offset: 100, easing: 'ease-out-quad' });
@@ -585,29 +576,6 @@
         let isPlaying = false;
         let fadeInterval = null;
 
-        function handleMusicControl() {
-            if (isPlaying) {
-                fadeAudio(0, 1500, () => { audio.pause(); musicIcon.classList.remove('animate-spin-slow'); musicIcon.classList.add('fa-pause'); });
-                isPlaying = false;
-            } else {
-                audio.volume = 0; audio.play().catch(() => {}); fadeAudio(1, 2000);
-                musicIcon.classList.add('animate-spin-slow'); musicIcon.classList.remove('fa-pause');
-                isPlaying = true;
-            }
-        }
-
-        function fadeAudio(targetVolume, duration = 2000, callback = null) {
-            if (fadeInterval) clearInterval(fadeInterval);
-            const startVolume = audio.volume;
-            const steps = 40;
-            let currentStep = 0;
-            fadeInterval = setInterval(() => {
-                currentStep++;
-                audio.volume = Math.max(0, Math.min(1, startVolume + ((targetVolume - startVolume) * (currentStep / steps))));
-                if (currentStep >= steps) { clearInterval(fadeInterval); if (callback) callback(); }
-            }, duration / steps);
-        }
-
         function animateNumber(element) {
             const targetStr = element.getAttribute('data-target');
             const target = parseInt(targetStr);
@@ -627,6 +595,29 @@
         const numberObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) { animateNumber(entry.target); numberObserver.unobserve(entry.target); } });
         }, { threshold: 0.5 });
+
+        function fadeAudio(targetVolume, duration = 2000, callback = null) {
+            if (fadeInterval) clearInterval(fadeInterval);
+            const startVolume = audio.volume;
+            const steps = 40;
+            let currentStep = 0;
+            fadeInterval = setInterval(() => {
+                currentStep++;
+                audio.volume = Math.max(0, Math.min(1, startVolume + ((targetVolume - startVolume) * (currentStep / steps))));
+                if (currentStep >= steps) { clearInterval(fadeInterval); if (callback) callback(); }
+            }, duration / steps);
+        }
+
+        function handleMusicControl() {
+            if (isPlaying) {
+                fadeAudio(0, 1500, () => { audio.pause(); musicIcon.classList.remove('animate-spin-slow'); musicIcon.classList.add('fa-pause'); });
+                isPlaying = false;
+            } else {
+                audio.volume = 0; audio.play().catch(() => {}); fadeAudio(1, 2000);
+                musicIcon.classList.add('animate-spin-slow'); musicIcon.classList.remove('fa-pause');
+                isPlaying = true;
+            }
+        }
 
         function openInvitation() {
             document.body.classList.remove('locked');
@@ -684,6 +675,7 @@
                 const comments = await response.json();
                 renderComments(comments);
             } catch (e) {
+                console.error(e);
                 document.getElementById('loading-text').innerText = "Belum ada ucapan.";
             }
         }
@@ -691,6 +683,7 @@
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
             container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4">Belum ada ucapan.</p>';
+            
             comments.forEach(c => {
                 const div = document.createElement('div');
                 div.className = 'p-4 glass-card border-b border-white/5 last:border-0 text-center';
@@ -728,6 +721,7 @@
                 document.getElementById('wish-form').reset();
                 setTimeout(loadMessages, 1500); 
             } catch(e) { 
+                console.error(e);
                 alert("Gagal kirim ucapan."); 
             } finally { 
                 btn.innerHTML = originalText; 
