@@ -150,10 +150,10 @@
             100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        /* ANTI WHITE BOX FIX - Mencegah kotak input jadi putih/silau */
+        /* ANTI WHITE BOX FIX - Memaksa input tetap transparan gelap */
         .form-input-custom {
-            background-color: rgba(0, 0, 0, 0.4) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            background-color: rgba(20, 20, 20, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
             color: #ffffff !important;
             padding: 14px 18px !important;
             border-radius: 4px;
@@ -162,28 +162,21 @@
             width: 100%;
         }
         .theme-light .form-input-custom {
-            background-color: rgba(255, 255, 255, 0.7) !important;
+            background-color: rgba(255, 255, 255, 0.8) !important;
             border: 1px solid rgba(0, 0, 0, 0.1) !important;
             color: #1a1a1a !important;
         }
         .form-input-custom:focus {
-            background-color: rgba(0, 0, 0, 0.6) !important;
+            background-color: rgba(0, 0, 0, 0.8) !important;
             border-color: #ffffff !important;
             outline: none;
         }
         .form-input-custom::placeholder {
             color: rgba(255, 255, 255, 0.4) !important;
         }
-        .theme-light .form-input-custom::placeholder {
-            color: rgba(0, 0, 0, 0.4) !important;
-        }
         .form-input-custom option {
             background-color: #1a1a1a;
             color: #ffffff;
-        }
-        .theme-light .form-input-custom option {
-            background-color: #ffffff;
-            color: #1a1a1a;
         }
 
         .bank-card {
@@ -249,8 +242,7 @@
 
                 <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30"></div>
 
-                <!-- Teks QS Dirapikan (Lebar dibatasi agar tidak melar) -->
-                <div class="max-w-2xl mx-auto px-4">
+                <div class="max-w-2xl mx-auto px-4 text-center">
                     <p class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90" data-aos="fade-up">
                         "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
                     </p>
@@ -411,7 +403,7 @@
 
                 <!-- Ruangan Komen Live -->
                 <div id="wishes-container" class="mt-20 space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar text-left">
-                    <p id="loading-text" class="text-xs opacity-50 italic text-center py-10">Memuat ucapan...</p>
+                    <p id="loading-text" class="text-xs opacity-50 italic text-center py-10 text-white">Memuat ucapan...</p>
                 </div>
             </div>
         </section>
@@ -452,17 +444,31 @@
         function toggleMusic(forcePlay = false) {
             clearInterval(fadeInterval);
             if (forcePlay || !isPlaying) {
-                if (audio.paused) { audio.volume = 0; audio.play().catch(e => console.log(e)); }
-                fadeInterval = setInterval(() => { if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05); else clearInterval(fadeInterval); }, 150);
-                musicIcon.classList.remove('fa-pause'); musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
+                if (audio.paused) {
+                    audio.volume = 0;
+                    audio.play().catch(e => console.log("Play failed"));
+                }
+                fadeInterval = setInterval(() => {
+                    if (audio.volume < 0.6) audio.volume = Math.min(0.6, audio.volume + 0.05);
+                    else clearInterval(fadeInterval);
+                }, 150);
+                musicIcon.classList.remove('fa-pause');
+                musicIcon.classList.add('fa-compact-disc', 'animate-spin-slow');
                 isPlaying = true;
             } else {
-                fadeInterval = setInterval(() => { if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05); else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); } }, 150);
-                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc'); musicIcon.classList.add('fa-pause');
+                fadeInterval = setInterval(() => {
+                    if (audio.volume > 0.05) audio.volume = Math.max(0, audio.volume - 0.05);
+                    else { audio.volume = 0; audio.pause(); clearInterval(fadeInterval); }
+                }, 150);
+                musicIcon.classList.remove('animate-spin-slow', 'fa-compact-disc');
+                musicIcon.classList.add('fa-pause');
                 isPlaying = false;
             }
         }
-        function toggleTheme() { document.body.classList.toggle('theme-dark'); document.body.classList.toggle('theme-light'); }
+        function toggleTheme() {
+            document.body.classList.toggle('theme-dark');
+            document.body.classList.toggle('theme-light');
+        }
         function copyToClipboard(text) {
             const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select();
             document.execCommand('copy'); document.body.removeChild(el);
@@ -492,9 +498,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Konfigurasi asli dari screenshot Anda
         const firebaseConfig = {
             apiKey: "AIzaSyBLbFjb4p1OoVa6Ho4khwa6Q7EFnzaaRms",
             authDomain: "wedding-41754.firebaseapp.com",
@@ -510,31 +515,49 @@
         const colRef = collection(db, 'ucapan_pernikahan');
 
         let userAuth = null;
+        let isListening = false;
 
-        // Login anonim segera setelah load
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                userAuth = user;
-                console.log("Terhubung sebagai:", user.uid);
-                startListening();
-            } else {
-                signInAnonymously(auth).catch(e => console.error("Login Gagal:", e));
+        // Login anonim dan mulai dengar data
+        const loginAndListen = async () => {
+            try {
+                if (!auth.currentUser) {
+                    const cred = await signInAnonymously(auth);
+                    userAuth = cred.user;
+                } else {
+                    userAuth = auth.currentUser;
+                }
+                
+                if (userAuth && !isListening) {
+                    startListening();
+                }
+            } catch (e) {
+                console.error("Login/Listen Error:", e);
+                document.getElementById('loading-text').innerText = "Gagal terhubung. Sila cek koneksi.";
             }
-        });
+        };
 
-        // Pendengar data real-time
         function startListening() {
+            isListening = true;
             onSnapshot(colRef, (snapshot) => {
                 const list = [];
                 snapshot.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                // Urutkan manual berdasarkan waktu terbaru
                 list.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
                 renderComments(list);
             }, (error) => {
-                console.error("Firebase Sync Error:", error);
-                document.getElementById('loading-text').innerText = "Gagal memuat ucapan: " + error.message;
+                console.error("Sync Error:", error);
+                document.getElementById('loading-text').innerText = "Gagal sinkron data.";
             });
         }
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userAuth = user;
+                if (!isListening) startListening();
+            }
+        });
+
+        // Jalankan login saat load
+        loginAndListen();
 
         function renderComments(comments) {
             const container = document.getElementById('wishes-container');
@@ -557,32 +580,26 @@
             });
         }
 
-        // Fungsi Kirim Pesan
         document.getElementById('wish-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submit-wish-btn');
             const originalText = btn.innerHTML;
-            
-            if(!userAuth) {
-                alert("Sedang menyambungkan ke server, mohon tunggu sebentar...");
-                return;
-            }
-
-            btn.innerHTML = 'MENGIRIM...'; 
-            btn.disabled = true;
-
-            const data = {
-                name: document.getElementById('wish-name').value,
-                message: document.getElementById('wish-message').value,
-                attendance: document.getElementById('wish-attendance').value,
-                timestamp: serverTimestamp()
-            };
+            btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
 
             try {
-                await addDoc(colRef, data);
+                // Pastikan auth siap sebelum kirim
+                if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+
+                await addDoc(colRef, {
+                    name: document.getElementById('wish-name').value,
+                    message: document.getElementById('wish-message').value,
+                    attendance: document.getElementById('wish-attendance').value,
+                    timestamp: serverTimestamp()
+                });
                 document.getElementById('wish-form').reset();
-                // Alert sukses opsional agar user tidak bingung
-                // alert("Ucapan terkirim!"); 
+                // Opsional: berikan notifikasi sederhana
             } catch(e) { 
                 console.error("Gagal Kirim:", e);
                 alert("Gagal kirim ucapan: " + e.message); 
