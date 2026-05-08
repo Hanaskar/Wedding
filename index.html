@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Pernikahan Akbari & Wahidah</title>
+    <title>Undangan Pernikahan Muhammad Maulida Akbari & Wahidah</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -18,6 +18,16 @@
                     colors: {
                         'dark-bg': '#0a0a0a',
                         'light-bg': '#F5F2EB', 
+                    },
+                    animation: {
+                        'float': 'floating 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        floating: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
                     }
                 }
             }
@@ -35,10 +45,10 @@
         /* Animasi Latar Belakang */
         @keyframes subtleZoom {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        .bg-zoom-animate { animation: subtleZoom 25s ease-in-out infinite; }
+        .bg-zoom-animate { animation: subtleZoom 20s ease-in-out infinite; }
 
         #global-bg {
             position: fixed;
@@ -62,8 +72,8 @@
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
         }
-        .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.75); }
-        .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.70); }
+        .theme-dark .bg-overlay { background-color: rgba(10, 10, 10, 0.85); }
+        .theme-light .bg-overlay { background-color: rgba(245, 242, 235, 0.80); }
 
         @keyframes bounceDown {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
@@ -98,7 +108,7 @@
             justify-content: center;
             z-index: -2;
             pointer-events: none;
-            opacity: 0.04;
+            opacity: 0.03;
         }
         .watermark-text {
             font-family: 'Great Vibes', cursive;
@@ -113,7 +123,7 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            transition: all 1s ease;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .theme-light .glass-card {
             background: rgba(255, 255, 255, 0.5);
@@ -136,7 +146,7 @@
         }
         
         .img-standard { transition: transform 0.8s ease; object-fit: cover; }
-        .img-standard:hover { transform: scale(1.03); }
+        .img-standard:hover { transform: scale(1.05); }
 
         .zoom-indicator {
             position: absolute;
@@ -223,27 +233,14 @@
             color: #1a1a1a !important;
         }
 
-        /* PERBAIKAN INPUT: Selalu Gelap Transparan */
         .form-input-custom {
-            background-color: rgba(0, 0, 0, 0.5) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            color: #ffffff !important;
-            padding: 14px 18px !important;
-            border-radius: 4px;
+            background-color: transparent !important;
+            border: 1px solid currentColor;
+            opacity: 0.4;
+            color: currentColor;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            width: 100%;
         }
-        .theme-light .form-input-custom {
-            background-color: rgba(255, 255, 255, 0.7) !important;
-            border: 1px solid rgba(0, 0, 0, 0.1) !important;
-            color: #1a1a1a !important;
-        }
-        .form-input-custom:focus {
-            background-color: rgba(0, 0, 0, 0.6) !important;
-            border-color: #ffffff !important;
-            outline: none;
-        }
+        .form-input-custom:focus { opacity: 0.9; }
 
         .btn-style {
             transition: all 0.5s ease;
@@ -254,32 +251,44 @@
         .slot-number { display: inline-block; min-width: 1ch; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: currentColor; opacity: 0.5; border-radius: 10px; }
+
+        /* Gaya Countdown */
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 65px;
+        }
+        @media (min-width: 640px) {
+            .countdown-item { min-width: 80px; }
+        }
     </style>
 </head>
 <body class="font-poppins theme-dark transition-colors duration-700 locked relative min-h-screen">
 
-    <!-- MODAL LIGHTBOX -->
+    <!-- Lightbox Galeri -->
     <div id="lightbox" onclick="closeLightbox()">
         <div id="lightbox-loader"></div>
         <img id="lightbox-img" src="" alt="Paparan Foto Penuh">
         <div class="absolute top-6 right-6 text-white/50 text-xs tracking-widest pointer-events-none uppercase">Klik untuk tutup</div>
     </div>
 
-    <!-- TANDA AIR -->
+    <!-- Watermark Background -->
     <div class="watermark-bg">
         <span class="watermark-text">A & W</span>
     </div>
 
-    <!-- Petunjuk Skrol -->
+    <!-- Hint Scroll -->
     <div id="scroll-hint" class="hidden flex flex-col items-center gap-2 text-current opacity-70">
         <span class="text-[9px] font-bold tracking-[0.3em] uppercase">Skrol ke bawah</span>
         <i class="fa-solid fa-chevron-down text-sm"></i>
     </div>
 
-    <!-- Kelopak Bunga Gugur -->
+    <!-- Container Kelopak Bunga -->
     <div id="petal-container" class="fixed inset-0 pointer-events-none z-[0] overflow-hidden hidden"></div>
 
-    <!-- Kawanan Burung -->
+    <!-- Animasi Burung Terbang -->
     <div id="flying-bird" class="fixed top-1/4 -left-64 z-50 pointer-events-none opacity-0 text-current">
         <div class="relative w-80 h-80">
             <svg viewBox="0 0 100 100" class="w-20 h-20 drop-shadow-2xl text-current absolute top-4 left-32" fill="currentColor">
@@ -294,144 +303,173 @@
         </div>
     </div>
 
+    <!-- Background Global -->
     <div id="global-bg">
         <div id="global-bg-img" class="bg-zoom-animate"></div>
         <div class="bg-overlay"></div>
     </div>
     <div class="noise-overlay"></div>
 
+    <!-- Kontrol Musik dan Tema -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
-        <button onclick="toggleTheme()" id="theme-btn" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center shadow-2xl border border-black/10 hover:scale-110 transition-transform">
+        <button onclick="toggleTheme()" id="theme-btn" class="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center shadow-2xl border border-black/10 hover:scale-110 active:scale-95 transition-transform">
             <i class="fa-solid fa-circle-half-stroke"></i>
         </button>
-        <button onclick="handleMusicControl()" class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-2xl border border-white/20 hidden hover:scale-110 transition-transform" id="music-container">
+        <button onclick="handleMusicControl()" class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-2xl border border-white/20 hidden hover:scale-110 active:scale-95 transition-transform" id="music-container">
             <i class="fa-solid fa-compact-disc" id="music-icon"></i>
         </button>
     </div>
     
     <audio id="wedding-music" loop src="https://www.dropbox.com/scl/fi/60flvsvw1mykghel4lcet/Kasih-Aera.mp3?rlkey=wehims3r2337ab73mfsscvkkx&st=6i9rp5tr&raw=1"></audio>
 
-    <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out overflow-hidden text-center flex items-center justify-center">
+    <!-- Halaman Cover -->
+    <section id="cover" class="fixed inset-0 w-full h-full z-40 bg-[#0a0a0a] transition-transform duration-[1500ms] ease-in-out overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center opacity-50 bg-zoom-animate" style="background-image: url('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent"></div>
-        <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-6">
-            <h3 class="text-[10px] tracking-[0.8em] mb-6 uppercase font-light">Undangan Pernikahan</h3>
-            <h1 class="font-cinzel text-5xl md:text-7xl mb-4 tracking-widest drop-shadow-2xl">Akbari <span class="block text-3xl font-great-vibes my-3 text-white/50">&</span> Wahidah</h1>
-            <p class="text-xs tracking-[0.4em] mb-16 font-light opacity-70 uppercase">JUNI 2026</p>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent"></div>
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-white text-center px-6">
+            <div data-aos="fade-down" data-aos-duration="1500">
+                <h3 class="text-[10px] tracking-[0.8em] mb-6 uppercase font-light opacity-80">Undangan Pernikahan</h3>
+                <h1 class="font-cinzel text-5xl md:text-7xl mb-4 tracking-widest drop-shadow-2xl">Akbari <span class="block text-3xl font-great-vibes my-3 text-white/50">&</span> Wahidah</h1>
+                <p class="text-xs tracking-[0.4em] mb-16 font-light opacity-70 uppercase">JUNI 2026</p>
+            </div>
             
-            <div class="p-10 bg-white/5 backdrop-blur-md rounded-none max-w-sm w-full border border-white/20 mx-auto">
+            <div class="p-10 bg-white/5 backdrop-blur-md rounded-none max-w-sm w-full border border-white/20 mx-auto transform transition-all duration-1000" data-aos="zoom-in" data-aos-delay="500">
                 <p class="text-[9px] uppercase tracking-[0.4em] mb-4 opacity-60">Kepada Yth.</p>
                 <h4 class="text-2xl font-bold mb-8 tracking-tight text-white" id="guest-name">Tamu Undangan</h4>
-                <button onclick="openInvitation()" class="w-full py-4 bg-white text-black font-bold tracking-[0.3em] uppercase text-[10px] transition hover:bg-transparent hover:text-white border border-white">
+                <button onclick="openInvitation()" class="w-full py-4 bg-white text-black font-bold tracking-[0.3em] uppercase text-[10px] transition hover:bg-transparent hover:text-white border border-white hover:scale-[1.02] active:scale-95">
                     Buka Undangan
                 </button>
             </div>
         </div>
     </section>
 
+    <!-- Konten Utama -->
     <main id="main-content" class="hidden opacity-0 transition-opacity duration-1000 relative z-10">
         
+        <!-- Bagian Pembukaan -->
         <section class="py-32 px-6 text-center">
-            <div class="max-w-4xl mx-auto glass-card p-12 md:p-16 border-t-4 border-t-current" data-aos="fade-up">
-                <div class="opacity-30 text-4xl mb-6 text-current"><i class="fa-solid fa-quote-left"></i></div>
-                <h3 class="font-cinzel text-xl md:text-2xl font-bold tracking-widest mb-4 text-current">Assalamu’alaikum Warahmatullahi Wabarakatuh</h3>
-                <p class="mb-10 leading-loose tracking-wide text-sm md:text-base font-light opacity-90 max-w-2xl mx-auto text-current">
+            <div class="max-w-4xl mx-auto glass-card p-8 sm:p-12 md:p-16 border-t-4 border-t-current animate-float" data-aos="fade-up">
+                <div class="opacity-30 text-4xl mb-6 text-current text-center w-full flex justify-center animate-pulse-slow">
+                    <i class="fa-solid fa-quote-left"></i>
+                </div>
+                <h3 class="font-cinzel text-lg sm:text-xl md:text-2xl font-bold tracking-normal sm:tracking-widest mb-6 text-current text-center break-words" data-aos="fade-up" data-aos-delay="200">
+                    Assalamu’alaikum Warahmatullahi Wabarakatuh
+                </h3>
+                <p class="mb-10 leading-loose tracking-wide text-sm md:text-base font-light opacity-90 max-w-2xl mx-auto text-current text-center" data-aos="fade-up" data-aos-delay="400">
                     Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami.
                 </p>
-                <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30"></div>
+                <div class="w-12 h-[1px] bg-current mx-auto mb-10 opacity-30" data-aos="zoom-in"></div>
                 <p id="typewriter-qs" class="mb-8 leading-loose tracking-wide text-sm md:text-lg font-light italic opacity-90 max-w-2xl mx-auto min-h-[140px] text-current text-center"></p>
-                <p class="font-bold text-[9px] tracking-[0.5em] uppercase opacity-60 text-current" data-aos="fade-in">( QS. AR-RUM: 21 )</p>
+                <p class="font-bold text-[9px] tracking-[0.5em] uppercase opacity-60 text-current text-center" data-aos="fade-in" data-aos-delay="800">( QS. AR-RUM: 21 )</p>
             </div>
         </section>
 
+        <!-- Mempelai -->
         <section id="couple" class="py-24 px-6 text-center overflow-hidden">
             <h2 class="font-cinzel text-3xl mb-6 tracking-[0.5em] uppercase text-current" data-aos="fade-up">Mempelai</h2>
             <div class="ornament mb-20 max-w-xs mx-auto text-current" data-aos="zoom-in"></div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 items-center justify-items-center gap-8 max-w-5xl mx-auto w-full text-current">
-                <div class="flex flex-col items-center text-center w-full" data-aos="fade-up">
-                    <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in mx-auto" onclick="openLightbox('https://www.dropbox.com/scl/fi/03gjazja0mmgc65c25xij/IMG_3435.jpg?rlkey=yu4qodtki9ch8g915i7b6f59z&raw=1')">
+                <!-- Mempelai Pria -->
+                <div class="flex flex-col items-center text-center w-full" data-aos="fade-right" data-aos-delay="200">
+                    <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in mx-auto overflow-hidden">
                         <img src="https://www.dropbox.com/scl/fi/03gjazja0mmgc65c25xij/IMG_3435.jpg?rlkey=yu4qodtki9ch8g915i7b6f59z&raw=1" alt="Muhammad Maulida Akbari" class="w-full aspect-[4/5] object-cover img-standard">
                         <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
                     </div>
-                    <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3">Maulida Akbari</h3>
-                    <p class="text-xs font-medium tracking-wide opacity-80 uppercase mb-4">Putra Pertama</p>
-                    <a href="https://instagram.com/abayy.422" target="_blank" class="flex items-center gap-2 px-4 py-1.5 border border-current rounded-full text-[10px] font-bold tracking-widest mb-6 hover:bg-current hover:text-black transition-all mx-auto w-fit">
-                        <i class="fa-brands fa-instagram text-sm"></i> ABAYY.422
-                    </a>
-                    <p class="text-[10px] font-light tracking-widest opacity-60 text-center">Bapak Nurrahman & <br>Ibu Misna</p>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3 text-current">Muhammad Maulida Akbari</h3>
+                        <p class="text-xs font-medium tracking-wide opacity-80 uppercase mb-4">Putra Pertama</p>
+                        <a href="https://instagram.com/abayy.422" target="_blank" class="flex items-center gap-2 px-4 py-2 border border-current rounded-full text-[10px] font-bold tracking-widest mb-6 hover:bg-current hover:text-black transition-all mx-auto w-fit active:scale-95">
+                            <i class="fa-brands fa-instagram text-sm"></i> ABAYY.422
+                        </a>
+                        <p class="text-[10px] font-light tracking-widest opacity-60">Bapak Nurrahman & Ibu Misna</p>
+                    </div>
                 </div>
 
-                <div class="flex justify-center py-8 md:py-0" data-aos="zoom-in">
-                    <span class="text-6xl md:text-8xl font-great-vibes opacity-30">&</span>
+                <div class="flex justify-center py-8 md:py-0" data-aos="zoom-in" data-aos-delay="400">
+                    <span class="text-6xl md:text-8xl font-great-vibes opacity-30 animate-pulse-slow">&</span>
                 </div>
 
-                <div class="flex flex-col items-center text-center w-full" data-aos="fade-up">
-                    <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in mx-auto" onclick="openLightbox('https://www.dropbox.com/scl/fi/gwumqwtuyu3zvoje1p9i2/IMG_3412.jpg?rlkey=algl3p5wo4o0xhj13p17cq42r&raw=1')">
+                <!-- Mempelai Wanita -->
+                <div class="flex flex-col items-center text-center w-full" data-aos="fade-left" data-aos-delay="200">
+                    <div class="group relative img-frame mb-8 glass-card p-2 w-56 md:w-64 text-current cursor-zoom-in mx-auto overflow-hidden">
                         <img src="https://www.dropbox.com/scl/fi/gwumqwtuyu3zvoje1p9i2/IMG_3412.jpg?rlkey=algl3p5wo4o0xhj13p17cq42r&raw=1" alt="Wahidah" class="w-full aspect-[4/5] object-cover img-standard">
                         <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
                     </div>
-                    <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3">Wahidah</h3>
-                    <p class="text-xs font-medium tracking-wide opacity-80 uppercase mb-4">Putri Pertama</p>
-                    <a href="https://instagram.com/wahidah.422" target="_blank" class="flex items-center gap-2 px-4 py-1.5 border border-current rounded-full text-[10px] font-bold tracking-widest mb-6 hover:bg-current hover:text-black transition-all mx-auto w-fit">
-                        <i class="fa-brands fa-instagram text-sm"></i> WAHIDAH.422
-                    </a>
-                    <p class="text-[10px] font-light tracking-widest opacity-60 text-center">Bapak Zainul Fahmi & <br>Ibu Yurpasaidah</p>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <h3 class="font-cinzel text-2xl font-bold tracking-widest uppercase mb-3">Wahidah</h3>
+                        <p class="text-xs font-medium tracking-wide opacity-80 uppercase mb-4">Putri Pertama</p>
+                        <a href="https://instagram.com/wahidah.422" target="_blank" class="flex items-center gap-2 px-4 py-2 border border-current rounded-full text-[10px] font-bold tracking-widest mb-6 hover:bg-current hover:text-black transition-all mx-auto w-fit active:scale-95">
+                            <i class="fa-brands fa-instagram text-sm"></i> WAHIDAH.422
+                        </a>
+                        <p class="text-[10px] font-light tracking-widest opacity-60">Bapak Zainul Fahmi & Ibu Yurpasaidah</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Galeri Momen (9 Foto - Simetris 3x3) -->
-        <section id="gallery" class="py-32 px-6 relative text-center">
+        <!-- Galeri Momen -->
+        <section id="gallery" class="py-32 px-6 relative">
             <div class="max-w-6xl mx-auto glass-card p-8 md:p-12 lg:p-16 border-current/10 text-current" data-aos="fade-up">
                 <div class="text-center mb-16">
-                    <h2 class="font-cinzel text-2xl tracking-[0.5em] uppercase mb-4">Galeri Momen</h2>
-                    <div class="w-16 h-[1px] bg-current mx-auto mb-4 opacity-30"></div>
-                    <p class="text-[9px] uppercase tracking-[0.8em] opacity-60">Kisah Cinta Kami</p>
+                    <h2 class="font-cinzel text-2xl tracking-[0.5em] uppercase mb-4" data-aos="fade-up">Galeri Momen</h2>
+                    <div class="w-16 h-[1px] bg-current mx-auto mb-4 opacity-30" data-aos="zoom-in"></div>
+                    <p class="text-[9px] uppercase tracking-[0.8em] opacity-60" data-aos="fade-up">Kisah Cinta Kami</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/i9l5x31lvaffangxcf6s5/IMG_3351.jpg?rlkey=yr1tcno83k5880ql8adok18xh&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('https://www.dropbox.com/scl/fi/i9l5x31lvaffangxcf6s5/IMG_3351.jpg?rlkey=yr1tcno83k5880ql8adok18xh&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/i9l5x31lvaffangxcf6s5/IMG_3351.jpg?rlkey=yr1tcno83k5880ql8adok18xh&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 1">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/xpl6ygj7odu0puncia8je/IMG_3336.jpg?rlkey=rt1ubkgh4wulp5zrk4f4rwdc3&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox('https://www.dropbox.com/scl/fi/xpl6ygj7odu0puncia8je/IMG_3336.jpg?rlkey=rt1ubkgh4wulp5zrk4f4rwdc3&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/xpl6ygj7odu0puncia8je/IMG_3336.jpg?rlkey=rt1ubkgh4wulp5zrk4f4rwdc3&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 2">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox('https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/kj6wl3imcjp85kxy525de/IMG_3353.jpg?rlkey=18texwaspjxedy3vs4n46apns&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 3">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/yj1a36hdx2kocka568x2p/IMG_3173.jpg?rlkey=8pm8jlr1exlzy74agpwpoitq9&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 4">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/g1forut91f658zdgcrcku/IMG_2947.jpg?rlkey=8bu70raide4d4aayn6mt8rvx8&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox('https://www.dropbox.com/scl/fi/g1forut91f658zdgcrcku/IMG_2947.jpg?rlkey=8bu70raide4d4aayn6mt8rvx8&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/g1forut91f658zdgcrcku/IMG_2947.jpg?rlkey=8bu70raide4d4aayn6mt8rvx8&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 5">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/qplc5zwazhwtbwfk40k2c/IMG_2949.jpg?rlkey=fnvdngdwvqijzpk1l4holtc77&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox('https://www.dropbox.com/scl/fi/qplc5zwazhwtbwfk40k2c/IMG_2949.jpg?rlkey=fnvdngdwvqijzpk1l4holtc77&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/qplc5zwazhwtbwfk40k2c/IMG_2949.jpg?rlkey=fnvdngdwvqijzpk1l4holtc77&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 6">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/3dlkpx3bmxos8au3p3x6z/IMG_3027.jpg?rlkey=bexhdr0pczl487uoifdexy4rh&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('https://www.dropbox.com/scl/fi/3dlkpx3bmxos8au3p3x6z/IMG_3027.jpg?rlkey=bexhdr0pczl487uoifdexy4rh&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/3dlkpx3bmxos8au3p3x6z/IMG_3027.jpg?rlkey=bexhdr0pczl487uoifdexy4rh&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 7">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/fniv5u6p96gmfe0ol81n3/IMG_3046.jpg?rlkey=x4dkx87v4w448lx8rr50qczys&raw=1')">
-                        <img src="https://www.dropbox.com/scl/fi/fniv5u6p96gmfe0ol81n3/IMG_3046.jpg?rlkey=x4dkx87v4w448lx8rr50qczys&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 8">
-                    </div>
-                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" onclick="openLightbox('https://www.dropbox.com/scl/fi/zfxedojyg2okpcyf6xp4p/IMG_3090.jpg?rlkey=a33hi2bps6pn2740h4tbc3yrp&raw=1')">
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="200" onclick="openLightbox('https://www.dropbox.com/scl/fi/zfxedojyg2okpcyf6xp4p/IMG_3090.jpg?rlkey=a33hi2bps6pn2740h4tbc3yrp&raw=1')">
                         <img src="https://www.dropbox.com/scl/fi/zfxedojyg2okpcyf6xp4p/IMG_3090.jpg?rlkey=a33hi2bps6pn2740h4tbc3yrp&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 9">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                    <div class="relative aspect-square overflow-hidden shadow-xl border border-current/10 cursor-pointer group w-full mx-auto" data-aos="fade-up" data-aos-delay="300" onclick="openLightbox('https://www.dropbox.com/scl/fi/nol56ap1yrwa1qzwyc30a/IMG_3286.jpg?rlkey=qjtxdpa1rctxfkwojlj792g61&raw=1')">
+                        <img src="https://www.dropbox.com/scl/fi/nol56ap1yrwa1qzwyc30a/IMG_3286.jpg?rlkey=qjtxdpa1rctxfkwojlj792g61&raw=1" class="w-full h-full object-cover img-standard group-hover:scale-110 transition-transform duration-700" alt="Momen 10">
+                        <div class="zoom-indicator bg-black/40 p-3 rounded-full text-white"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Bahagian Acara -->
+        <!-- Waktu & Tempat -->
         <section id="event" class="py-24 px-6 overflow-hidden text-center text-current">
-            <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase text-current" data-aos="fade-up">Masa & Tempat</h2>
+            <h2 class="font-cinzel text-3xl mb-6 tracking-[0.4em] uppercase text-current" data-aos="fade-up">Waktu & Tempat</h2>
             <div class="ornament mb-16 max-w-xs mx-auto text-current" data-aos="zoom-in"></div>
-            <div class="grid md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto text-current justify-items-center">
-                <div class="glass-card p-12 flex flex-col items-center w-full" data-aos="fade-up">
+            
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto text-current justify-items-center mb-16">
+                <!-- Akad -->
+                <div class="glass-card p-12 flex flex-col items-center w-full hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="100">
                     <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mb-8">Akad Nikah</h3>
                     <div class="text-3xl font-light mb-6">
                         <span class="slot-number" data-target="05">00</span> . 
@@ -440,11 +478,12 @@
                     </div>
                     <p class="tracking-widest font-light mb-4 text-current">09.00 WITA - Selesai</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10 text-sm">Masjid Agung Al-Munawwarah <br> Banjarbaru</p>
-                    <a href="https://maps.app.goo.gl/96H1WvS8K6Vb3N2A9" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 hover:scale-105 transition-transform shadow-xl mx-auto">
+                    <a href="https://maps.app.goo.gl/96H1WvS8K6Vb3N2A9" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 shadow-xl mx-auto hover:tracking-[0.3em]">
                         BUKA MAPS <i class="fa-solid fa-map-location-dot"></i>
                     </a>
                 </div>
-                <div class="glass-card p-12 flex flex-col items-center w-full" data-aos="fade-up" data-aos-delay="200">
+                <!-- Resepsi -->
+                <div class="glass-card p-12 flex flex-col items-center w-full hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="font-cinzel text-xl font-bold tracking-widest uppercase mb-8">Resepsi</h3>
                     <div class="text-3xl font-light mb-6">
                         <span class="slot-number" data-target="07">00</span> . 
@@ -453,103 +492,160 @@
                     </div>
                     <p class="tracking-widest font-light mb-4 text-current">11.00 WITA - Selesai</p>
                     <p class="font-bold uppercase tracking-widest leading-relaxed mb-10 text-sm text-center">Grand Dafam Q Hotel <br> Banjarbaru (Q Mall)</p>
-                    <a href="https://maps.app.goo.gl/vQZpL4P8vD2J7D2A9" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 hover:scale-105 transition-transform shadow-xl mx-auto">
+                    <a href="https://maps.app.goo.gl/vQZpL4P8vD2J7D2A9" target="_blank" class="btn-style px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-3 shadow-xl mx-auto hover:tracking-[0.3em]">
                         BUKA MAPS <i class="fa-solid fa-map-location-dot"></i>
                     </a>
                 </div>
             </div>
+
+            <!-- Countdown -->
+            <div class="max-w-4xl mx-auto" data-aos="zoom-in" data-aos-duration="1500">
+                <div class="glass-card p-8 md:p-12 border-b-2 border-b-current">
+                    <p class="font-cinzel text-[10px] tracking-[0.6em] uppercase mb-8 opacity-60">Menuju Hari Bahagia</p>
+                    <div id="countdown" class="flex justify-center gap-4 sm:gap-10">
+                        <div class="countdown-item">
+                            <span id="days" class="text-3xl sm:text-5xl font-light mb-2">00</span>
+                            <span class="text-[8px] sm:text-[10px] font-bold tracking-widest uppercase opacity-50">Hari</span>
+                        </div>
+                        <div class="text-3xl sm:text-5xl font-extralight opacity-30 mt-[-4px]">:</div>
+                        <div class="countdown-item">
+                            <span id="hours" class="text-3xl sm:text-5xl font-light mb-2">00</span>
+                            <span class="text-[8px] sm:text-[10px] font-bold tracking-widest uppercase opacity-50">Jam</span>
+                        </div>
+                        <div class="text-3xl sm:text-5xl font-extralight opacity-30 mt-[-4px]">:</div>
+                        <div class="countdown-item">
+                            <span id="minutes" class="text-3xl sm:text-5xl font-light mb-2">00</span>
+                            <span class="text-[8px] sm:text-[10px] font-bold tracking-widest uppercase opacity-50">Menit</span>
+                        </div>
+                        <div class="text-3xl sm:text-5xl font-extralight opacity-30 mt-[-4px]">:</div>
+                        <div class="countdown-item">
+                            <span id="seconds" class="text-3xl sm:text-5xl font-light mb-2 text-current">00</span>
+                            <span class="text-[8px] sm:text-[10px] font-bold tracking-widest uppercase opacity-50">Detik</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Hadiah (ATM BRI Style) -->
+        <!-- Hadiah -->
         <section id="gift" class="py-24 px-6 text-center text-current">
-            <div class="max-w-3xl mx-auto glass-card p-8 md:p-16 border-b-4 border-b-current" data-aos="fade-up">
-                <h2 class="font-cinzel text-2xl mb-6 tracking-widest uppercase text-current" data-aos="fade-up">Hadiah Pernikahan</h2>
+            <div class="max-w-3xl mx-auto glass-card p-8 md:p-16 border-b-4 border-b-current animate-float" data-aos="fade-up">
+                <h2 class="font-cinzel text-2xl mb-6 tracking-widest uppercase text-current">Hadiah Pernikahan</h2>
                 <p class="text-xs md:text-sm font-light opacity-80 leading-relaxed mb-12 text-current" data-aos="fade-up" data-aos-delay="200">
                     Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br>
                     Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberi melalui saluran di bawah ini.
                 </p>
                 
-                <div class="relative w-full max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-2xl p-5 sm:p-6 flex flex-col justify-between bank-card transition-transform hover:scale-105 duration-500 mx-auto" data-aos="flip-left">
+                <div class="relative w-full max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-2xl p-5 sm:p-6 flex flex-col justify-between bank-card transition-all hover:rotate-2 hover:scale-105 duration-500 mx-auto" data-aos="flip-left" data-aos-delay="400">
                     <div class="relative z-10 flex justify-between items-start mb-8 sm:mb-0">
-                        <div class="bg-white px-3 py-1.5 rounded-md shadow-sm flex items-center justify-center">
-                            <!-- Logo BRI Inline SVG -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 148 40" fill="none">
-                                <path d="M12.4 0C5.5 0 0 5.6 0 12.4V27.6C0 34.4 5.5 40 12.4 40H27.6C34.4 40 40 34.4 40 27.6V12.4C40 5.6 34.4 0 27.6 0H12.4ZM23.4 8.4C26.1 8.4 28.2 10.5 28.2 13.2V26.8C28.2 29.5 26.1 31.6 23.4 31.6H13.6C10.9 31.6 8.8 29.5 8.8 26.8V13.2C8.8 10.5 10.9 8.4 13.6 8.4H23.4Z" fill="#00529C"/>
-                                <text x="45" y="28" font-family="Arial" font-weight="bold" font-size="28" fill="#00529C">BRI</text>
-                            </svg>
+                        <div class="p-2 bg-white/10 rounded-lg flex flex-col items-center">
+                            <i class="fa-solid fa-building-columns text-xl opacity-80"></i>
+                            <span class="text-[8px] font-bold mt-1 tracking-widest uppercase">BANK BCA</span>
                         </div>
-                        <i class="fa-solid fa-credit-card text-2xl opacity-40"></i>
+                        <i class="fa-solid fa-credit-card text-2xl opacity-40 animate-pulse"></i>
                     </div>
 
                     <div class="relative z-10 text-left mt-auto">
-                        <p class="text-[9px] opacity-70 uppercase tracking-[0.2em] mb-2 text-white/80">No Rekening</p>
+                        <p class="text-[9px] opacity-70 uppercase tracking-[0.2em] mb-2">No Rekening</p>
                         <div id="rek-number" class="text-lg sm:text-xl md:text-2xl font-mono tracking-[0.05em] sm:tracking-[0.15em] mb-5 flex flex-wrap gap-x-2 text-white justify-center sm:justify-start">
-                            <span>0330</span> <span>0105</span> <span>8799</span> <span>505</span>
+                            <span class="slot-number" data-target="0330">0000</span>
+                            <span class="slot-number" data-target="0105">0000</span>
+                            <span class="slot-number" data-target="8799">0000</span>
+                            <span class="slot-number" data-target="505">000</span>
                         </div>
                         <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4 sm:gap-0">
                             <div class="text-center sm:text-left">
                                 <p class="text-[9px] opacity-70 uppercase tracking-widest mb-1 text-white/70">Atas Nama</p>
                                 <p class="font-bold tracking-widest uppercase text-xs sm:text-sm text-white break-words">Muhammad Maulida Akbari</p>
                             </div>
-                            <button onclick="copyToClipboard('033001058799505')" class="w-full sm:w-auto text-[10px] bg-white text-black px-5 py-2.5 rounded-full font-bold shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                            <button onclick="copyToClipboard('033001058799505')" class="w-full sm:w-auto text-[10px] bg-white text-black px-5 py-2.5 rounded-full font-bold shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 hover:bg-gray-200">
                                 <i class="fa-regular fa-copy"></i> Salin
                             </button>
                         </div>
                     </div>
+                    <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 20% 20%, #fff 1px, transparent 1px); background-size: 20px 20px;"></div>
                 </div>
             </div>
         </section>
 
-        <!-- RSVP Section (GOOGLE SHEETS LIVE) -->
+        <!-- Ucapan & RSVP -->
         <section id="rsvp" class="py-24 px-6 max-w-4xl mx-auto text-current text-center">
             <h2 class="font-cinzel text-3xl mb-16 tracking-widest uppercase text-current" data-aos="fade-up">Ucapan & Doa</h2>
             <div class="glass-card p-10 md:p-16 border-current/10 text-current mx-auto" data-aos="fade-up">
                 <form id="wish-form" class="space-y-6">
-                    <div data-aos="fade-up"><input type="text" id="wish-name" class="form-input-custom text-center" placeholder="NAMA ANDA" required></div>
-                    <div data-aos="fade-up" data-aos-delay="100">
-                        <select id="wish-attendance" class="form-input-custom cursor-pointer text-center" required>
+                    <div data-aos="fade-up" data-aos-delay="100"><input type="text" id="wish-name" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm outline-none text-center" placeholder="NAMA ANDA" required></div>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <select id="wish-attendance" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm outline-none cursor-pointer text-center" required>
                             <option value="" disabled selected>KONFIRMASI KEHADIRAN</option>
                             <option value="Hadir">Hadir</option>
                             <option value="Tidak Hadir">Tidak Hadir</option>
                         </select>
                     </div>
-                    <div data-aos="fade-up" data-aos-delay="200"><textarea id="wish-message" rows="4" class="form-input-custom resize-none text-center" placeholder="UCAPAN & DOA..." required></textarea></div>
-                    <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center gap-4">
-                        <button type="submit" id="submit-wish-btn" class="btn-style w-full py-5 font-bold tracking-[0.5em] uppercase text-[10px] hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg">
-                            KIRIM <i class="fa-solid fa-paper-plane"></i>
+                    <div data-aos="fade-up" data-aos-delay="300"><textarea id="wish-message" rows="4" class="form-input-custom w-full px-4 py-3 text-sm rounded-sm resize-none outline-none text-center" placeholder="UCAPAN & DOA..." required></textarea></div>
+                    <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col items-center gap-4">
+                        <button type="submit" class="btn-style w-full py-5 font-bold tracking-[0.5em] uppercase text-[10px] hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg">
+                            KIRIM <i class="fa-solid fa-paper-plane animate-bounce"></i>
                         </button>
                     </div>
                 </form>
-                <div id="wishes-container" class="mt-16 space-y-6 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar text-center" data-aos="fade-up">
-                    <p id="loading-text" class="text-xs opacity-50 italic">Memuat ucapan tamu...</p>
+                <div id="wishes-container" class="mt-16 space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar text-center" data-aos="fade-up">
+                    <p class="text-xs opacity-50 italic">Belum ada ucapan...</p>
                 </div>
             </div>
         </section>
         
+        <!-- Footer -->
         <footer class="py-32 text-center overflow-hidden text-current">
-             <h2 class="font-great-vibes text-5xl mb-6 text-current" data-aos="zoom-in">Until Forever</h2>
+             <h2 class="font-great-vibes text-5xl mb-6 text-current animate-pulse-slow" data-aos="zoom-in">Until Forever</h2>
              <p class="font-cinzel font-bold text-lg tracking-[0.8em] mb-12 uppercase text-current" data-aos="fade-up">Akbari & Wahidah</p>
+
              <div class="max-w-2xl mx-auto px-6 mb-20 text-current" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="font-cinzel text-xl font-bold tracking-widest mb-4 uppercase">Terima Kasih</h3>
-                <p class="text-sm font-light tracking-wide opacity-80 leading-relaxed">
+                <h3 class="font-cinzel text-xl font-bold tracking-widest mb-4">Terima Kasih</h3>
+                <p class="text-sm font-light tracking-wide opacity-80 leading-relaxed text-center">
                     Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i sekalian.
                 </p>
              </div>
+
              <div class="pt-10 border-t border-current/10 w-48 mx-auto text-current" data-aos="zoom-in">
                 <p class="text-[8px] tracking-[0.6em] uppercase font-bold opacity-80">© 2026 by HANASKAR.ID</p>
              </div>
         </footer>
     </main>
 
-    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 px-8 py-4 bg-current text-white theme-dark:text-black theme-light:text-white text-[9px] font-bold tracking-[0.4em] uppercase opacity-0 transition-opacity z-[100] pointer-events-none shadow-2xl rounded-sm">Disalin!</div>
-
     <!-- UI Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // URL DATABASE GOOGLE SCRIPT
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcBumexD7MyhqRA8s1-16-ES9czRz6IQV0YKe2Sfk9KEHJupi5l4CGTi5ZF6VjP4ER/exec";
+        AOS.init({ duration: 1200, once: true, offset: 80, easing: 'ease-out-cubic' });
 
-        AOS.init({ duration: 1200, once: true, offset: 100, easing: 'ease-out-quad' });
+        // LOGIKA HITUNG MUNDUR (COUNTDOWN)
+        const weddingDate = new Date("June 7, 2026 09:00:00").getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            const daysEl = document.getElementById("days");
+            const hoursEl = document.getElementById("hours");
+            const minutesEl = document.getElementById("minutes");
+            const secondsEl = document.getElementById("seconds");
+
+            if(daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+            if(hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+            if(minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+            if(secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "<p class='font-cinzel tracking-widest uppercase'>Hari Bahagia Telah Tiba!</p>";
+            }
+        }
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
 
         function createPetals() {
             const container = document.getElementById('petal-container');
@@ -573,6 +669,13 @@
         const scrollHint = document.getElementById('scroll-hint');
         let isPlaying = false;
         let fadeInterval = null;
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                scrollHint.style.opacity = '0';
+                setTimeout(() => scrollHint.style.visibility = 'hidden', 800);
+            }
+        });
 
         function animateNumber(element) {
             const targetStr = element.getAttribute('data-target');
@@ -629,7 +732,6 @@
                 document.getElementById('main-content').classList.remove('opacity-0');
                 AOS.refresh();
                 document.querySelectorAll('.slot-number').forEach(num => numberObserver.observe(num));
-                loadMessages();
             }, 100);
             document.getElementById('music-container').classList.remove('hidden');
             audio.volume = 0; audio.play().catch(() => {}); fadeAudio(1, 3000); isPlaying = true;
@@ -651,82 +753,38 @@
         function copyToClipboard(text) {
             const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el);
             el.select(); document.execCommand('copy'); document.body.removeChild(el);
-            const toast = document.getElementById('toast'); toast.classList.remove('opacity-0');
-            setTimeout(() => toast.classList.add('opacity-0'), 2500);
+            const msgBox = document.createElement('div');
+            msgBox.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 glass-card px-6 py-2 text-[10px] font-bold tracking-widest uppercase z-[2000]';
+            msgBox.innerText = 'Nomor Rekening Berhasil Disalin';
+            document.body.appendChild(msgBox);
+            setTimeout(() => msgBox.remove(), 2500);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const text = '"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."';
             let i = 0;
             const qs = document.getElementById('typewriter-qs');
-            function type() { if (i < text.length) { qs.innerHTML += text.charAt(i); i++; setTimeout(type, 35); } }
-            const obs = new IntersectionObserver((e) => { if(e[0].isIntersecting) { type(); obs.disconnect(); } });
+            function type() { if (i < text.length) { qs.innerHTML += text.charAt(i); i++; setTimeout(type, 45); } }
+            const obs = new IntersectionObserver((e) => { if(e[0].isIntersecting) { setTimeout(type, 500); obs.disconnect(); } });
             obs.observe(qs);
         });
 
-        const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('guest-name').innerText = urlParams.get('to') || 'Tamu Undangan';
+        const guest = new URLSearchParams(window.location.search).get('to') || 'Tamu Undangan';
+        document.getElementById('guest-name').innerText = guest;
 
-        // GOOGLE SHEETS LIVE LOGIC
-        async function loadMessages() {
-            try {
-                const response = await fetch(SCRIPT_URL);
-                const comments = await response.json();
-                renderComments(comments);
-            } catch (e) {
-                console.error(e);
-                document.getElementById('loading-text').innerText = "Gagal memuat ucapan.";
-            }
-        }
-
-        function renderComments(comments) {
-            const container = document.getElementById('wishes-container');
-            container.innerHTML = comments.length ? '' : '<p class="text-xs opacity-50 italic text-center py-4">Belum ada ucapan.</p>';
-            
-            comments.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'p-4 glass-card border-b border-white/5 last:border-0 text-center mb-4';
-                div.innerHTML = `
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold text-[10px] uppercase tracking-[0.4em]">${c.name}</span>
-                        <span class="${c.attendance === 'Hadir' ? 'text-green-400' : 'text-red-400'} text-[8px] font-bold uppercase tracking-widest">${c.attendance}</span>
-                    </div>
-                    <p class="text-xs opacity-80 leading-relaxed font-light italic">"${c.message}"</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        document.getElementById('wish-form').addEventListener('submit', async (e) => {
+        document.getElementById('wish-form').onsubmit = function(e) {
             e.preventDefault();
-            const btn = document.getElementById('submit-wish-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = 'MENGIRIM...'; btn.disabled = true;
-
-            const data = {
-                name: document.getElementById('wish-name').value,
-                message: document.getElementById('wish-message').value,
-                attendance: document.getElementById('wish-attendance').value
-            };
-
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                document.getElementById('wish-form').reset();
-                setTimeout(loadMessages, 1500); 
-            } catch(e) { 
-                console.error(e);
-                alert("Gagal kirim ucapan."); 
-            } finally { 
-                btn.innerHTML = originalText; 
-                btn.disabled = false; 
-            }
-        });
+            const name = document.getElementById('wish-name').value;
+            const msg = document.getElementById('wish-message').value;
+            const att = document.getElementById('wish-attendance').value;
+            const container = document.getElementById('wishes-container');
+            if (container.querySelector('p.italic')) container.innerHTML = '';
+            const newWish = document.createElement('div');
+            newWish.className = 'p-4 glass-card border-l-2 border-l-current mb-4 text-left animate-fade-in';
+            newWish.innerHTML = `<div class="flex justify-between items-center mb-1"><span class="font-bold text-xs uppercase tracking-widest text-current">${name}</span><span class="text-[9px] px-2 py-0.5 border border-current opacity-60 text-current">${att}</span></div><p class="text-[11px] opacity-80 leading-relaxed italic text-current text-center">"${msg}"</p>`;
+            container.prepend(newWish);
+            this.reset();
+        };
     </script>
 </body>
 </html>
